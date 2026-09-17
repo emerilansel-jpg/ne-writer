@@ -184,9 +184,11 @@ Target Keyword: ${keyword}
 Content Type: ${contentType}
 Brand Clinical Notes: ${siteData.notes || "Maintain high clinical standards."}
 
-MANDATORY DOCUMENT HEADER (Must be the EXACT first 4 lines of your response, no markdown preambles or greetings):
+MANDATORY DOCUMENT HEADER (Must be the EXACT first lines, each separated by a blank line):
 URL: ${expectedUrl}
+
 Title: [Meta Title under 60 characters with primary keyword and brand name]
+
 Meta Description: [150 to 158 characters with primary keyword, ending with an active call to action]
 
 # **[H1 Headline]**
@@ -200,7 +202,11 @@ STRICT CLINICAL & SEO GUIDELINES:
 3. Never promise cures or 100% success. Use "many patients experience", "clinical trials show".
 4. Attribute outcomes (such as 83% relief) strictly to clinical trial data (e.g. "In NeuroStar clinical trials..."). Never claim practice-level statistics.
 5. Distinguish FDA-cleared indications from off-label or adjunctive uses clearly.
-6. Mandatory crisis disclaimer at end: "${siteData.disclaimer}"
+
+MANDATORY DOCUMENT FOOTER (At the very end of the document, separated by horizontal rule, in full italics):
+---
+
+*Disclaimer: ${siteData.disclaimer}*
 
 STRICT EDITORIAL HUMANIZER RULES (MANDATORY):
 1. §1 NO "NOT X BUT Y": Eliminate "not just X, it is Y", "it is not X, it's Y", "X rather than Y", and negative strawman preambles before positive statements. State positive claims directly.
@@ -222,31 +228,64 @@ STRICT EDITORIAL HUMANIZER RULES (MANDATORY):
 Deliver the complete, polished, 100% humanized final content in Markdown. Line 1 MUST begin with "URL: ${expectedUrl}".`;
 }
 
-// --- POST PROCESSOR TO GUARANTEE URL HEADER ---
+// --- POST PROCESSOR TO GUARANTEE URL HEADER, SPACING, AND ITALIC DISCLAIMER ---
 function formatContentOutput(rawContent, expectedUrl, site, keyword) {
-  let text = (rawContent || "").trim();
+  let res = (rawContent || "").trim();
+  const siteData = KNOWLEDGE_BASE.sites[site] || {
+    disclaimer: "Outpatient psychiatric services. In emergency or crisis, call 988 or 911."
+  };
 
-  // If output does not start with URL:, ensure URL header is injected at line 1
-  if (!text.toLowerCase().startsWith("url:")) {
-    // Check if it starts with Title: or **Title
-    if (text.toLowerCase().startsWith("title:") || text.toLowerCase().startsWith("**title")) {
-      text = `URL: ${expectedUrl}\n\n` + text;
+  // 1. Extract URL, Title, Meta Description if present
+  const urlRegex = /(?:URL:\s*([^\n\r]+))/i;
+  const titleRegex = /(?:Title(?:\s*Tag)?:\s*([^\n\r]+))/i;
+  const metaRegex = /(?:Meta Description:\s*([^\n\r]+))/i;
+
+  let urlMatch = res.match(urlRegex);
+  let titleMatch = res.match(titleRegex);
+  let metaMatch = res.match(metaRegex);
+
+  let url = urlMatch ? urlMatch[1].trim() : expectedUrl;
+  let title = titleMatch ? titleMatch[1].trim() : `${keyword} | ${site}`;
+  let meta = metaMatch ? metaMatch[1].trim() : "";
+
+  // Strip existing header lines from the top
+  res = res.replace(/URL:[^\n\r]+[\r\n]*/i, "")
+           .replace(/Title(?:\s*Tag)?:[^\n\r]+[\r\n]*/i, "")
+           .replace(/Meta Description:[^\n\r]+[\r\n]*/i, "").trim();
+
+  // Strip leading horizontal rules or blank lines
+  res = res.replace(/^[\r\n\s\-_]+/, "");
+
+  // Format header with double newlines so markdown does not collapse lines
+  let header = `URL: ${url}\n\nTitle: ${title}\n\n`;
+  if (meta) {
+    header += `Meta Description: ${meta}\n\n`;
+  }
+  res = header + res;
+
+  // 2. Format the ending disclaimer as italic (*Disclaimer: ...*)
+  if (!/\*Disclaimer:[\s\S]+\*$/i.test(res.trim())) {
+    const discWordIdx = res.search(/(\n|\r|^)(?:[\*\-_#\s]*)?Disclaimer:?/i);
+    if (discWordIdx !== -1) {
+      const pre = res.substring(0, discWordIdx).trim();
+      let body = res.substring(discWordIdx).trim();
+      body = body.replace(/^[\*\-_#\s]*Disclaimer:?\s*/i, "");
+      body = body.replace(/[\*\_]+$/, "").trim();
+      res = pre + "\n\n---\n\n*Disclaimer: " + body + "*";
     } else {
-      // Find where H1 starts
-      const h1Match = text.match(/#\s+/);
-      if (h1Match && h1Match.index > 0) {
-        const preH1 = text.substring(0, h1Match.index).trim();
-        const postH1 = text.substring(h1Match.index);
-        if (!preH1.toLowerCase().includes("url:")) {
-          text = `URL: ${expectedUrl}\n` + preH1 + "\n\n" + postH1;
-        }
+      const crisisMatch = res.search(/(\n|\r|^)(?:[^\n\r]*)(?:outpatient psychiatric care|emergency crisis|Suicide & Crisis Lifeline|call or text 988)/i);
+      if (crisisMatch !== -1) {
+        const pre = res.substring(0, crisisMatch).trim();
+        let body = res.substring(crisisMatch).trim();
+        body = body.replace(/^[\*\-_#\s]+/, "").replace(/[\*\_]+$/, "").trim();
+        res = pre + "\n\n---\n\n*Disclaimer: " + body + "*";
       } else {
-        text = `URL: ${expectedUrl}\n\n` + text;
+        res = res.trim() + "\n\n---\n\n*Disclaimer: " + siteData.disclaimer + "*";
       }
     }
   }
 
-  return text;
+  return res;
 }
 
 // --- CALL PESATROUTER ---
@@ -585,7 +624,8 @@ const HTML_UI = `<!DOCTYPE html>
     .markdown-body h1 { font-size: 1.8rem; margin: 1.5rem 0 1rem; color: #fff; border-bottom: 1px solid #1f293d; padding-bottom: 0.5rem; }
     .markdown-body h2 { font-size: 1.35rem; margin: 1.3rem 0 0.75rem; color: #93c5fd; }
     .markdown-body h3 { font-size: 1.1rem; margin: 1rem 0 0.5rem; color: #e2e8f0; }
-    .markdown-body p { margin-bottom: 0.85rem; }
+    .markdown-body p { margin-bottom: 1.1rem; line-height: 1.7; }
+    .markdown-body em, .markdown-body i { font-style: italic; color: #94a3b8; }
     .markdown-body ul, .markdown-body ol { margin: 0 0 1rem 1.5rem; }
     .markdown-body li { margin-bottom: 0.35rem; }
     .markdown-body table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
@@ -878,7 +918,12 @@ const HTML_UI = `<!DOCTYPE html>
     function setContent(text) {
       currentRawContent = text;
       document.getElementById('rawView').textContent = text;
-      document.getElementById('renderedView').innerHTML = marked.parse(text);
+      if (window.marked) {
+        marked.use({ breaks: true, gfm: true });
+        document.getElementById('renderedView').innerHTML = marked.parse(text);
+      } else {
+        document.getElementById('renderedView').innerText = text;
+      }
       updateStats(text);
     }
 
