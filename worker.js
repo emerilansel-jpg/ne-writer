@@ -228,10 +228,34 @@ STRICT EDITORIAL HUMANIZER RULES (MANDATORY):
 Deliver the complete, polished, 100% humanized final content in Markdown. Line 1 MUST begin with "URL: ${expectedUrl}".`;
 }
 
-// --- POST PROCESSOR TO GUARANTEE URL HEADER, SPACING, AND ITALIC DISCLAIMER ---
+// --- FOOTER HELPER ---
+function buildCleanFooter(siteData, keyword) {
+  let addressParts = [];
+  if (siteData.location) addressParts.push(siteData.location);
+  if (siteData.phone) addressParts.push(`Phone: ${siteData.phone}`);
+
+  let brandLine = `**${siteData.name}**` + (addressParts.length ? ` ${addressParts.join(" ")}` : "");
+
+  let disclaimerBody = "";
+  const kwLower = (keyword || "").toLowerCase();
+  if (kwLower.includes("genetic") || kwLower.includes("pharmacogenom")) {
+    disclaimerBody = `Pharmacogenomic testing provides supplemental biological information to assist qualified clinicians in prescribing decisions. It does not replace comprehensive clinical evaluation or diagnose psychiatric conditions. Individual treatment outcomes vary. ${siteData.disclaimer}`;
+  } else if (kwLower.includes("tms") || kwLower.includes("depression")) {
+    disclaimerBody = `Individual treatment outcomes vary. TMS therapy is not suitable for all patients. A thorough evaluation is required to determine appropriateness for treatment. ${siteData.disclaimer}`;
+  } else {
+    disclaimerBody = `Individual treatment outcomes vary. Healthcare information provided is for educational purposes and does not replace professional medical advice. ${siteData.disclaimer}`;
+  }
+
+  return `\n\n---\n\n${brandLine}\n\n*Disclaimer: ${disclaimerBody}*`;
+}
+
+// --- POST PROCESSOR TO GUARANTEE URL HEADER, SPACING, AND CANONICAL FOOTER ---
 function formatContentOutput(rawContent, expectedUrl, site, keyword) {
   let res = (rawContent || "").trim();
   const siteData = KNOWLEDGE_BASE.sites[site] || {
+    name: site,
+    location: "",
+    phone: "",
     disclaimer: "Outpatient psychiatric services. In emergency or crisis, call 988 or 911."
   };
 
@@ -263,27 +287,19 @@ function formatContentOutput(rawContent, expectedUrl, site, keyword) {
   }
   res = header + res;
 
-  // 2. Format the ending disclaimer as italic (*Disclaimer: ...*)
-  if (!/\*Disclaimer:[\s\S]+\*$/i.test(res.trim())) {
-    const discWordIdx = res.search(/(\n|\r|^)(?:[\*\-_#\s]*)?Disclaimer:?/i);
-    if (discWordIdx !== -1) {
-      const pre = res.substring(0, discWordIdx).trim();
-      let body = res.substring(discWordIdx).trim();
-      body = body.replace(/^[\*\-_#\s]*Disclaimer:?\s*/i, "");
-      body = body.replace(/[\*\_]+$/, "").trim();
-      res = pre + "\n\n---\n\n*Disclaimer: " + body + "*";
-    } else {
-      const crisisMatch = res.search(/(\n|\r|^)(?:[^\n\r]*)(?:outpatient psychiatric care|emergency crisis|Suicide & Crisis Lifeline|call or text 988)/i);
-      if (crisisMatch !== -1) {
-        const pre = res.substring(0, crisisMatch).trim();
-        let body = res.substring(crisisMatch).trim();
-        body = body.replace(/^[\*\-_#\s]+/, "").replace(/[\*\_]+$/, "").trim();
-        res = pre + "\n\n---\n\n*Disclaimer: " + body + "*";
-      } else {
-        res = res.trim() + "\n\n---\n\n*Disclaimer: " + siteData.disclaimer + "*";
-      }
-    }
+  // 2. Format the ending footer with separator (---), Brand Address Phone, and Italic Disclaimer
+  const splitIdx = res.search(/(\n|\r)\s*(?:---|___|\*\*\*|(?:\*+|_*)?Disclaimer:?|(?:\*+|\b)(?:Onward Psychiatry|Liberty TMS|Fayetteville TMS)\b.*Phone:)/i);
+  if (splitIdx !== -1) {
+    res = res.substring(0, splitIdx).trim();
   }
+
+  const crisisIdx = res.search(/(\n|\r)\s*(?:[^\n\r]*)(?:provides outpatient psychiatric care|If you or a loved one is experiencing immediate distress)/i);
+  if (crisisIdx !== -1) {
+    res = res.substring(0, crisisIdx).trim();
+  }
+
+  // Append canonical separator, address line, and italicized disclaimer
+  res = res.trim() + buildCleanFooter(siteData, keyword);
 
   return res;
 }
