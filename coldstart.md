@@ -1,15 +1,15 @@
-# Coldstart: Neil Emmett Content Studio & Humanizer Engine
+# Coldstart: NE Content Studio & Humanizer Engine
 
 > Last updated: 2026-09-17
 > Status: PRODUCTION LIVE & VERIFIED
-> Live Web App: https://jdpwriter.com/neil
-> Alternative Route: https://jdpwriter.com/neil-emmett
-> Worker Dev URL: https://neil-emmett-writer.emerilansel.workers.dev
-> Health Check: https://jdpwriter.com/neil/health
-> Guidelines API: https://jdpwriter.com/api/neil/guidelines
-> Generate API: https://jdpwriter.com/api/neil/generate
-> Humanize API: https://jdpwriter.com/api/neil/humanize
-> GitHub Repo: https://github.com/emerilansel-jpg/neil-emmett-writer
+> Live Web App: https://jdpwriter.com/ne
+> Alternative Route: https://jdpwriter.com/neil
+> Worker Dev URL: https://ne-writer.emerilansel.workers.dev
+> Health Check: https://jdpwriter.com/ne/health
+> Guidelines API: https://jdpwriter.com/api/ne/guidelines
+> Generate API: https://jdpwriter.com/api/ne/generate
+> Humanize API: https://jdpwriter.com/api/ne/humanize
+> GitHub Repo: https://github.com/emerilansel-jpg/ne-writer
 > Cloudflare Account: `Emerilansel@gmail.com` (`d5cb3e4213b6aa69dbc2feb1499af77a`)
 > Zone: `jdpwriter.com` (`b21475189eb55bb061f1314d711205e6`)
 > Model: `pesat-pro` via PesatRouter (`https://api.pesatrouter.com/v1/chat/completions`)
@@ -17,16 +17,17 @@
 ---
 
 ## 1. Project Overview & Separation Architecture
-The Neil Emmett Content Studio is built to generate high-performing, medically compliant, humanized healthcare copy across several content types (service pages, location pages, military sub-pillars, accreditations, and informational guides).
+NE Content Studio is built to generate high-performing, medically compliant, humanized healthcare copy across several content types (service pages, location pages, military sub-pillars, accreditations, and informational guides).
 
 It operates completely isolated from the standard JDP 23-step article pipeline and the Social Research Tool using **Cloudflare Specific Route Binding** on `jdpwriter.com`:
 
 ```
 Traffic to https://jdpwriter.com
        │
-       ├──► jdpwriter.com/neil* ──────────► Worker: neil-emmett-writer (This App)
-       ├──► jdpwriter.com/api/neil* ──────► Worker: neil-emmett-writer (This App)
-       ├──► jdpwriter.com/neil-emmett* ──► Worker: neil-emmett-writer (This App)
+       ├──► jdpwriter.com/ne* ────────────► Worker: ne-writer (Isolasi 100%)
+       ├──► jdpwriter.com/api/ne* ────────► Worker: ne-writer (Isolasi 100%)
+       ├──► jdpwriter.com/neil* ──────────► Worker: ne-writer (Isolasi 100%)
+       ├──► jdpwriter.com/api/neil* ──────► Worker: ne-writer (Isolasi 100%)
        │
        ├──► jdpwriter.com/research* ──────► Worker: social-research-tool
        ├──► jdpwriter.com/api/research* ──► Worker: social-research-tool
@@ -35,7 +36,7 @@ Traffic to https://jdpwriter.com
 ```
 
 **Zero Pipeline Collision**:
-- `neil-emmett-writer` has its own isolated Cloudflare Worker code and bundle (`worker.js`).
+- `ne-writer` has its own isolated Cloudflare Worker code and bundle (`worker.js`).
 - It does not modify or share files with `jdp-pipeline-admin`.
 - Deploying or updating this tool has zero effect on JDP article generation.
 
@@ -90,7 +91,7 @@ The built-in humanizer automatically filters and rewrites drafts to remove machi
 ## 4. How to Use the Web App
 
 ### Input Format
-Navigate to `https://jdpwriter.com/neil`. You only need to provide:
+Navigate to `https://jdpwriter.com/ne`. You only need to provide:
 ```text
 Site: Onward Psychiatry
 Keyword: Genetic Testing
