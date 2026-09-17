@@ -1,0 +1,21 @@
+{
+  "name": "neil-emmett-writer",
+  "version": "1.0.0",
+  "description": "Neil Emmett Content Generator & Humanizer Pipeline powered by Pesat-Pro",
+  "main": "worker.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "keywords": [
+    "cloudflare-worker",
+    "content-generator",
+    "humanizer",
+    "pesat-pro"
+  ],
+  "author": "Emeril Ansel",
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^4.133.0"
+  }
+}

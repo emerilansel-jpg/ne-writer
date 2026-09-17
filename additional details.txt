@@ -1,0 +1,76 @@
+### Content type yang belum ada guidenya sama sekali, hanya keyword:
+
+- Under Resources (ex keyword: Resources, Provider Resources)  
+- Sub page of contact&nbsp;  
+- Footer pages (ex keyword: cookie policy, frree TMS guide)
+
+&nbsp;
+
+### Service Page:
+
+[Service Page: What Is TMS Therapy? | Liberty](https://docs.google.com/document/d/1cCGi7krprm7aKFBTGhelD9Rjp-8_H0YaUAiiS-4z57U/edit?usp=sharing)&nbsp;
+
+[Service Page: VA Community Care (VA TMS) | Liberty](https://docs.google.com/document/d/1S3lOzzzo44giQ4vA9SigsUN1S3hU5Jj79qYFoJE5OOc/edit?usp=sharing)
+
+&nbsp;
+
+&nbsp;
+
+### Humanize (original dr client ada di tab 1):
+
+[Copy of 12 · TMS Therapy for Active-Duty Service Members — Fayetteville TMS (Launch 2)](https://docs.google.com/document/d/1Lxh6SrtBPggp8TJUw5PGv5kAx086ql04RckIQBb3B_U/edit?usp=sharing)
+
+[Copy of 14 · Deployment Mental Health Support — Fayetteville TMS (Launch 2)](https://docs.google.com/document/d/15Mcl9xYskt3TePDqB3zF_7sQFS7F-VxnKr0YDlV24Mo/edit?usp=sharing)
+
+&nbsp;
+
+### Under About:&nbsp;
+
+[Accreditations & Certifications](https://docs.google.com/document/d/1CD1m61bS6Ds8a70isGxLssH2gtTL2iTZWvkfuNR75ZA/edit?usp=sharing)
+
+Guide:
+
+These are stage 2 pages of liberty TMS. Please check the sitemap first before writing the content so you and your team would understand which page lies under what category and write content accordingly. This is the link to sitemap [https://octopus.do/w5jfz67p4p](https://octopus.do/w5jfz67p4p)
+
+please revise it and as this is the strategic problem. A page called "Accreditations & Certifications" contains no third-party accreditation and no clinic certification. What it actually contains:
+
+* FDA clearance of a device the clinic buys, not a clinic credential  
+* HIPAA compliance, a legal minimum, not an accreditation  
+* Vendor training from the device manufacturer  
+* Room disinfection
+
+Missing: state medical licensure, NPI, board certification of named physicians, and any recognized body (Joint Commission, AAAHC, ACHC, CARF). A searcher or referring provider landing here to verify credentials leaves with nothing verifiable. That is an E-E-A-T negative, not a positive.
+
+**NeuroStar FDA clearance dates are wrong (two of three).**
+
+The page states OCD clearance in 2018 and anxious depression in 2021\. Verified against Neuronetics primary sources
+
+&nbsp;
+
+### Informational page:
+
+[TMS therapy cost ](https://docs.google.com/document/d/17o_Sb-BdG9Yy9NPEaK-_KGKZAnZ0kRPWsT08rZ1_1DQ/edit?usp=sharing)
+
+&nbsp;
+
+### Checklist yg dikasih ke saya sebelum submit blog post:
+
+[Blog Review Checklist DigiRX.docx](https://docs.google.com/document/d/16vxsuo0ABChRRKZYyvpNSyQdSFpr3rHG/edit?usp=sharing&ouid=101790911004318283353&rtpof=true&sd=true)
+
+&nbsp;
+
+Guides untuk Sub category (TMS):
+
+This is a sub topic under the topical MAP of Who we serve you can check on the site map, make sure its internal linked to  Pages properly.
+
+Since its under Pregnant Women please add the link. [https://octopus.do/cj76ehd7kne](https://octopus.do/cj76ehd7kne) Do refer to sitemap before writing any content so you can have an idea what internal links to be added and how the content should be structured
+
+&nbsp;
+
+Guides untuk Sub category (Who We Serve):
+
+This is a sub topic under the topical MAP of Who we serve you can check on the site map, make sure its internal linked to Pages properly.
+
+It has three sub pages make sure to add them
+
+[https://octopus.do/cj76ehd7kne](https://octopus.do/cj76ehd7kne) Do refer to sitemap before writing any content so you can have an idea what internal links to be added and how the content should be structured&nbsp;&nbsp;

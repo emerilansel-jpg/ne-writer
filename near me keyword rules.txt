@@ -1,0 +1,47 @@
+## **Untuk semua jenis konten, baik blog post, condition, landing pages, etc:**&nbsp;
+
+For Recently we have assigned blog:&nbsp;
+
+&nbsp;
+
+Near Me & Location Keyword Usage
+
+&nbsp;
+
+When targeting keywords that include **“near me”** or a specific **location**, do **not** force or repeatedly use the exact-match keyword throughout the content.
+
+• Focus the content primarily on the **core service, provider, or condition** associated with the keyword.
+
+Examples: **TMS therapy**, **psychiatrist**, **depression treatment**, **anxiety treatment**, etc.
+
+• If the target keyword contains **“near me,”** such as **“TMS therapy near me”** or **“psychiatrist near me,”** you do **not** need to use the exact keyword repeatedly.
+
+• Use the **“near me”** variation naturally **only once**, preferably in one of the following:
+
+The body content
+
+An H2
+
+An FAQ question
+
+• For location-based keywords, use the **location naturally** within the content while keeping the primary focus on the relevant service, provider, or condition.
+
+• Avoid keyword stuffing or unnatural phrasing such as repeatedly writing **“TMS therapy near me”** or **“psychiatrist near me.”**
+
+• The content should read naturally for the user first while still establishing strong topical relevance around the **service/provider/condition \+ location or local intent**.
+
+**Example:**
+
+Instead of repeatedly using:
+
+TMS therapy near me
+
+Focus on:
+
+TMS therapy
+
+And naturally incorporate local intent once:
+
+Looking for TMS therapy near me? Finding a qualified local provider can make it easier to explore whether TMS is appropriate for your needs.
+
+**Key rule:** The **core topic/service/condition is the primary focus**. “Near me” and location modifiers should support the topic, not dominate the content.

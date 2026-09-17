@@ -1,0 +1,381 @@
+## **Location page:**
+
+must read instructions carefully
+
+&nbsp;
+
+1\. The single most important instruction
+
+The page structure does not change. You are rewriting copy inside a fixed skeleton. Do not add sections, remove sections, reorder them, merge them, add headings, or change any heading's level. Every section in Part 7 must appear in your document in that exact order.
+
+One exception is authorized, and only one: the FAQ block grows from 8 questions to 10 (see section 14). Nothing else changes count.
+
+If a section feels redundant, flag it in a comment. Do not fix it yourself.
+
+2\. Keywords
+
+Primary
+
+tms therapy Norwood ma, 8 to 10 uses.
+
+Use the exact string only where it works as a label: title tag, meta description, H1, image alt. In body copy, write it the way a person would say it: "TMS therapy in Norwood, MA" or "TMS therapy in Norwood." Forcing the raw string into a sentence reads like spam and does not help rankings.
+
+Secondary, grouped
+
+The list you were given contains near duplicates. Treat each group below as one target, not as separate ones. Writing "NeuroStar TMS therapy" once satisfies three of the listed variants at the same time. Aim for 2 to 4 uses per group across the whole page, not per keyword.
+
+Group
+
+Covers
+
+Uses
+
+A. Core
+
+tms therapy, tms treatment, tms therapy treatment
+
+5 to 7
+
+B. Technology
+
+neurostar tms therapy, neurostar advanced tms therapy, tms therapy neurostar
+
+3 to 4
+
+C. Mechanism
+
+how does tms work, tms brain mapping, tms brain stimulation
+
+3 to 4
+
+D. Outcomes
+
+tms success rate, tms therapy success rate, benefits of tms therapy
+
+3 to 4
+
+E. Cost
+
+tms therapy cost
+
+2 to 3
+
+F. Commercial
+
+tms therapy clinic, tms therapy providers
+
+3 to 4
+
+G. Brand
+
+onward psychiatry (the brand name), onward psychiatry solutions (a search query, not a name)
+
+2 to 3
+
+Group G needs careful handling
+
+Two different things are in this group and they follow different rules.
+
+"Onward Psychiatry" is the business name. Use it freely. It appears in the title tag, the footer, the address block, and throughout the copy. Always capitalized, always spelled exactly this way.
+
+"Onward psychiatry solutions" is a search query, not a business name. People type it, so the page should answer it, but the practice is not called Onward Psychiatry Solutions. Never write it as a capitalized three word proper noun, because that reads as a second business name and creates a mismatch with the Google Business Profile, the directory citations, and the schema markup. Local rankings depend on that name matching everywhere it appears.
+
+Target the query instead by putting the words near each other in a sentence where "solutions" is doing an ordinary job:
+
+"Onward Psychiatry offers TMS therapy solutions in Norwood, MA for people whose medication has not worked."
+
+"The mental health solutions Onward Psychiatry provides in Norwood go beyond medication management."
+
+"Looking at treatment solutions? Onward Psychiatry in Norwood, MA offers FDA cleared TMS therapy."
+
+Google matches queries on meaning and word proximity, not on an exact character string, so a phrasing like these picks up the query without inventing a brand.
+
+Never place it in: the title tag, the H1, the footer, the address block, image alt text, or anywhere the business identifies itself by name. Two or three uses in body copy is the ceiling.
+
+Pair keywords with the location
+
+This is the main SEO instruction in this brief. Wherever a secondary keyword appears in a heading or a topic sentence, attach Norwood, MA or Norfolk County to it:
+
+"TMS therapy cost in Norwood, MA"
+
+"NeuroStar TMS therapy at our Norwood clinic"
+
+"TMS therapy providers serving Norwood and Norfolk County"
+
+"How does TMS work at our Norwood, MA clinic"
+
+"the benefits of TMS therapy for Norwood residents"
+
+Do this in every H2 and in the opening sentence of each section. Do not do it in every paragraph, because that tips into stuffing and reads badly. The rule of thumb: location in the heading, location in the first line, then write normally.
+
+3\. Keyword to section map
+
+Section
+
+Keyword group homed here
+
+Title, meta, H1, hero
+
+Primary and A
+
+Stat bar
+
+D (success rate)
+
+Process
+
+C (how TMS works, brain mapping, brain stimulation) and B
+
+Conditions treated
+
+A and G
+
+Why us
+
+D (benefits), B, F (clinic), and G
+
+Team
+
+F (providers)
+
+Insurance and cost
+
+E
+
+Directions
+
+Primary and F (clinic)
+
+FAQ
+
+Primary, C, D, E, B
+
+Final CTA
+
+Primary
+
+4\. Audience and intent
+
+Someone in or near Norwood who has been on antidepressants, usually two or more, and is still depressed. They are tired, skeptical, and have probably been told to try a different SSRI more than once. They are working out whether TMS is real, whether it is covered, and whether it is worth 35 trips to a clinic on Walpole Street.
+
+Write for that person. Not for a search engine, and not for a clinician.
+
+They must walk away knowing: what TMS is, that it is FDA cleared and not ECT, that a session is about 19 minutes with no downtime, that insurance usually covers it and the clinic handles the paperwork, where the office is, and what the first step is.
+
+5\. Voice and style
+
+Plain, warm, direct. Second person, present tense.
+
+Short sentences. Paragraphs of 2 to 4 sentences.
+
+No hype. Avoid revolutionary, life changing, cutting edge, game changer.
+
+No fear based framing. Do not describe depression vividly to manufacture urgency.
+
+Reading level grade 8 to 9\. US English.
+
+Write like a person, not like a chatbot
+
+Copy that sounds machine written loses trust fast, and on a medical page that matters more than usual. Avoid the following.
+
+Words and phrases to cut: delve, navigate the landscape, embark, unlock, realm, robust, seamless, leverage, foster, elevate, empower, transformative, holistic, tapestry, testament, beacon, cornerstone, pave the way, dive into, in today's fast paced world, when it comes to, rest assured, look no further, it is important to note, that said.
+
+Sentence shapes to avoid:
+
+"It is not just X, it is Y." Say what it is.
+
+A colon followed by a dramatic reveal.
+
+Rhetorical questions used as headings or openers.
+
+Three item lists in every paragraph. Vary the rhythm.
+
+Starting consecutive sentences with "Whether you are."
+
+Moreover, Furthermore, Additionally as sentence openers.
+
+No em dashes anywhere in the copy. Use a comma, a full stop, a colon, or rewrite the sentence. If you find yourself reaching for one, the sentence is usually doing two jobs and should be two sentences. Middle dots in the badge and chip rows are fine, since those are list separators rather than prose.
+
+Note that some locked content already contains words on this list. Locked content stays exactly as it is. The rule applies to copy you write.
+
+Medical and YMYL rules, non negotiable
+
+Never promise or imply a specific outcome. Write "many patients experience," not "you will feel."
+
+Never claim TMS is better than medication or therapy. It is an option when medication has not worked.
+
+Never state or imply that insurance will definitely cover a given reader.
+
+Do not invent statistics, response rates or study references. Use only the figures in Part 6\.
+
+Do not give clinical advice about stopping or changing medication.
+
+Specific to the outcomes keywords in Group D: "success rate" is the riskiest term on this page. Anchor every use to the supplied NeuroStar figure and attribute it. Write "in NeuroStar's clinical data, 83% of patients experienced meaningful symptom relief." Never write "our success rate is 83%," which claims practice level outcomes the client cannot substantiate.
+
+6\. Locked content, copy and paste, do not rewrite
+
+These carry regulatory and legal weight. Pull them word for word from the live page.
+
+The 83% symptom relief figure and its phrasing
+
+"19 minutes" session length, and 60 to 90 minutes for the first appointment
+
+FDA clearance dates: 2008 for depression, 2018 for OCD
+
+Course length: 5 sessions per week for approximately 7 weeks, around 35 sessions
+
+The full NeuroStar Adult Indications for Use block
+
+The full NeuroStar Adolescent Indications for Use block
+
+The full Important Safety Information block, including the seizure risk figure (under 0.1% per patient)
+
+The crisis notice (911, 988, Mass Health Line 833-773-2445)
+
+Insurance carrier names and the 10 row table
+
+Name, address and phone: Onward Psychiatry, 1 Walpole St \#6, Norwood, MA 02062, (617) 958-6036
+
+Provider names, credentials and job titles
+
+The JotForm and Google Maps embeds. Mark the position and the developer handles them.
+
+Insurance requirement language stays factually identical: a documented MDD or treatment resistant depression diagnosis, plus at least two antidepressant trials at adequate dose and duration.
+
+7\. Section by section spec
+
+Word counts allow 15% either way.
+
+Meta
+
+Title tag: TMS Therapy Norwood, MA | Onward Psychiatry, under 60 characters
+
+Meta description: 150 to 158 characters, primary keyword included, ends with a call to action
+
+1\. Hero, 130 words
+
+H1: contains TMS therapy Norwood, MA as an exact match
+
+Eyebrow line: FDA cleared, drug free, non invasive, serving Norfolk County and Greater Boston
+
+One paragraph opening with the primary keyword in natural form. Names Norwood plus Walpole, Dedham and Canton. Covers: medication has not worked, TMS treatment is an alternative, roughly 19 minute sessions, most insurance accepted, resume your day immediately.
+
+Group A lands here.
+
+2\. Condition chips, 6 items, 2 to 4 words each
+
+Major Depressive Disorder, Treatment Resistant Depression, OCD, Anxious Depression, Anxiety, Bipolar Disorder.
+
+3\. Lead form block, 45 words
+
+Headline, a line on response time (within a day), a line on insurance coordination, a privacy reassurance line, and a phone fallback naming the Norwood team. Form embed sits here.
+
+4\. Stat bar, 3 captions, about 10 words each
+
+83%, 19 min, 2008\. Figures are locked. The 83% caption is where Group D gets its first use. Attribute it to NeuroStar clinical data.
+
+5\. Trust badges, 5 items, 3 to 7 words each
+
+One badge must read: Serving Norwood, Walpole, Dedham and Canton.
+
+6\. Name, address, phone and map block, 25 words
+
+Practice name, address, phone, hours, then an "Also serving" list: Norwood, Walpole, Dedham, Canton, Westwood, Sharon. Dedham and Canton link to their own location pages. The rest stay as plain text.
+
+7\. Testimonials, intro 30 words
+
+H2: patient feedback framed around Norfolk County
+
+Intro paragraph, then the 3 existing reviews. Do not edit review text. Attribution stays as initials.
+
+8\. Process, intro 45 words, 3 steps at 65 words each
+
+H2: built on Group C plus location, for example "How does TMS work at our Norwood, MA clinic?"
+
+The intro is the natural home for "TMS brain stimulation." Gentle magnetic pulses, similar to MRI, targeting the brain regions that influence mood.
+
+Step 1 H4 (Free consultation and evaluation): include TMS brain mapping here. Mapping actually happens at this stage, so the keyword is factually correct in this slot and nowhere else.
+
+Step 2 H4 (Personalized treatment plan): NeuroStar Advanced TMS Therapy, which is Group B.
+
+Step 3 H4 (Daily sessions, 6 to 7 weeks): must include the local detail that patients can drive themselves back to Norwood or Walpole straight after.
+
+Ends with the existing call to action link to the TMS Therapy pillar page.
+
+9\. Conditions treated, intro 50 words, 6 cards at 50 words each
+
+H2: Group A plus location
+
+Cards in this order: MDD, Treatment Resistant Depression, OCD, Anxious Depression, Bipolar Disorder, PTSD and Other Applications
+
+The MDD, OCD and Anxious Depression cards keep their links to the service pages
+
+Mention Norwood or Norfolk County in two cards, not more
+
+The intro is one of the two homes for Group G. See Part 2 for how to phrase it.
+
+10\. Why us, intro 35 words, 4 blocks at 55 words each
+
+H2: Group F plus location, for example "Why Norwood residents choose our TMS therapy clinic"
+
+The intro carries "benefits of TMS therapy" from Group D and references how close the office is to Norwood Hospital on Walpole Street
+
+H3 blocks: insurance clarified upfront, FDA cleared NeuroStar technology, built for your busy life, consistent and compassionate care
+
+The NeuroStar block is the main home for Group B
+
+The intro is the second home for Group G. Use the word solutions in an ordinary descriptive sense, never as part of a capitalized business name.
+
+11\. Team, H2 plus featured bio 90 words, plus 9 cards at 20 words each
+
+H2: Group F plus location, for example "Meet our TMS therapy providers in Norwood, MA"
+
+Hannah Lynch is featured. Her bio references the Norwood community and Norfolk County.
+
+Remaining providers get one line each. Credentials are locked.
+
+12\. Insurance and cost, 80 words plus 50 words on requirements
+
+H2: Group E plus location, phrased as a question, for example "How much does TMS therapy cost in Norwood, MA?" or "Does insurance cover TMS therapy in Norwood, MA?"
+
+Lead with the direct answer. This is a featured snippet target. Open with "yes," or with a line like "for most patients, very little out of pocket," then explain.
+
+Carrier table word for word, then the prior authorization paragraph, then the self pay line
+
+Do not quote a dollar figure unless the client supplies one
+
+13\. Directions, 40 plus 50 words, plus 3 steps at 20 words each
+
+H2: primary keyword plus Group F, for example "Directions to our TMS therapy clinic in Norwood, MA"
+
+Intro: near Norwood Hospital, reachable from Route 1 and I-95
+
+"Parking and access" subheading: free on site parking, main entrance, Suite \#6, accessibility, phone number for help finding it
+
+"From Norwood Center," 3 numbered turn by turn steps. The current page uses Nahatan St to Walpole St. Verify against a map before submitting.
+
+Drive times: Walpole about 8 minutes, Dedham about 12, Canton about 10, Westwood about 10, Sharon about 15
+
+14\. FAQ, 10 questions, 40 to 60 words per answer
+
+H2: primary keyword
+
+Eight carry over in substance: insurance accepted, first appointment length, TMS compared with ECT, number of sessions, side effects, which TMS technology, parking at the Norwood location, how to get started
+
+Two new questions. This is the authorized exception to locked counts.A success rate question from Group D. Attribute to NeuroStar data, no practice level claims.
+
+A cost question from Group E, covering out of pocket costs, deductibles and self pay, with no invented figures.
+
+Answer first, then elaborate. These target the People Also Ask box.
+
+Phrase questions the way a patient would type them. At least three should contain "Norwood."
+
+15\. Final call to action, 55 words plus 4 bullets
+
+H2: primary keyword
+
+Bullets: free consultation, fast insurance verification, appointments often within 7 days, service area
+
+Form embed and phone number
+
+&nbsp;
