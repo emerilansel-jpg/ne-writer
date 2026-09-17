@@ -8,11 +8,10 @@
 > Health Check: https://jdpwriter.com/ne/health
 > Guidelines API: https://jdpwriter.com/api/ne/guidelines
 > Generate API: https://jdpwriter.com/api/ne/generate
-> Humanize API: https://jdpwriter.com/api/ne/humanize
 > GitHub Repo: https://github.com/emerilansel-jpg/ne-writer
 > Cloudflare Account: `Emerilansel@gmail.com` (`d5cb3e4213b6aa69dbc2feb1499af77a`)
 > Zone: `jdpwriter.com` (`b21475189eb55bb061f1314d711205e6`)
-> Model: `pesat-pro` via PesatRouter (`https://api.pesatrouter.com/v1/chat/completions`)
+> Model: `pesat-pro` via PesatRouter (Internal, hidden from client/UI)
 
 ---
 
@@ -42,7 +41,58 @@ Traffic to https://jdpwriter.com
 
 ---
 
-## 2. Supported Sites & Knowledge Base Presets
+## 2. Iteration Highlights & Key Fixes (2026-09-17)
+
+### A. Naming
+- Renamed project and worker from `neil-emmett-writer` to **`ne-writer` (NE)**.
+- Clean header title: **NE Content Studio**.
+- GitHub repo renamed to `https://github.com/emerilansel-jpg/ne-writer`.
+
+### B. Auto Quick Parse
+- Real-time auto-parse on typing and pasting into the Quick Input box (`input` and `paste` event listeners).
+- Clear visual feedback badge (`✓ Site: ... · Keyword: ... · Type: ...`).
+- Fail-safe check in `runGeneration()` automatically parses the textarea content even if the user skips clicking "Parse Quick Input".
+
+### C. Unified 1-Step Execution (Humanizer Baked In)
+- Removed standalone humanizer tab.
+- Single button execution: drafts and fully humanizes the content in one smooth workflow.
+- Output presented in the preview pane is 100% finished, humanized, and ready to use.
+
+### D. AI Engine Completely Hidden
+- Removed all UI badges and labels referencing "Pesat-Pro", "Live Edge Engine", or underlying AI model names.
+- Clean clinical progress milestones:
+  1. *Checking guidelines & site specifications*
+  2. *Creating structured clinical content with URL slug*
+  3. *Refining tone & human clarity*
+- Clean health check response: `{"status":"ok","service":"ne-writer","timestamp":"..."}`.
+
+### E. Top-of-Page Canonical URL & Metadata Spacing
+- Every document strictly starts with:
+  ```markdown
+  URL: https://[domain]/[path]/[keyword-slug]/
+
+  Title: [Meta Title under 60 characters with keyword]
+
+  Meta Description: [150 to 158 characters with keyword and CTA]
+
+  # **[H1 Headline]**
+  ```
+- Uses double newlines (`\n\n`) so Markdown engines and browser preview never collapse lines together into run-on paragraphs.
+- Configured frontend renderer with `marked.use({ breaks: true, gfm: true })`.
+
+### F. Canonical Footer Separator & Italic Disclaimer
+- Every document concludes with the standardized footer format:
+  ```markdown
+  ---
+
+  **[Brand Name]** [Address] Phone: [Phone]
+
+  *Disclaimer: [Service-specific disclaimer text]. Individual treatment outcomes vary. [Site crisis and 988 emergency notice].*
+  ```
+
+---
+
+## 3. Supported Sites & Knowledge Base Presets
 
 ### A. Onward Psychiatry (Norwood, MA)
 - **Address**: 1 Walpole St #6, Norwood, MA 02062
@@ -71,7 +121,7 @@ Traffic to https://jdpwriter.com
 
 ---
 
-## 3. Humanizer Engine Rules (§1 to §25)
+## 4. Humanizer Engine Rules (§1 to §25)
 The built-in humanizer automatically filters and rewrites drafts to remove machine generation patterns:
 - **§1 No "Not X but Y"**: Direct statement of positive facts without negative strawman preambles.
 - **§2 No One-Line Dramatic Closers**: Removed punchy sentence fragments designed for false weight.
@@ -88,7 +138,7 @@ The built-in humanizer automatically filters and rewrites drafts to remove machi
 
 ---
 
-## 4. How to Use the Web App
+## 5. How to Use the Web App
 
 ### Input Format
 Navigate to `https://jdpwriter.com/ne`. You only need to provide:
@@ -97,21 +147,18 @@ Site: Onward Psychiatry
 Keyword: Genetic Testing
 Content type: service page
 ```
-You can use the form dropdowns, or paste the 3-line block into the **Quick Paste** box and click **Parse Quick Input**.
+You can use the form dropdowns, or paste the 3-line block into the **Quick Input** box and click **Parse Quick Input** (or click **Generate Content** directly).
 
-### Pipeline Execution
-Click **Generate & Humanize**:
-1. **Step 1**: Loads brand metadata, clinical guidelines, and section structure.
-2. **Step 2**: Prompts `pesat-pro` to draft the full structured copy.
-3. **Step 3**: Passes the draft through the automated Humanizer filter with `pesat-pro`.
-4. **Result**: Displays live rendered markdown, word count, character count, estimated reading time, with 1-click Copy and Download buttons.
-
-### Standalone Humanizer
-Switch to the **Humanizer Tool** tab to paste any existing draft and strip AI patterns with a single click.
+### Output Features
+- Real-time Markdown rendering with HTML preview toggle.
+- Raw Markdown view.
+- Word count, character count, estimated reading time.
+- 1-click Copy button.
+- 1-click Download `.md` file button.
 
 ---
 
-## 5. Adding New Guidelines & Content Types in the Future
+## 6. Adding New Guidelines & Content Types in the Future
 
 All guidelines are defined in `worker.js` within the `KNOWLEDGE_BASE` constant.
 
@@ -120,6 +167,7 @@ In `worker.js`, append to `KNOWLEDGE_BASE.sites`:
 ```javascript
 "New Clinic Name": {
   name: "New Clinic Name",
+  domain: "https://newclinic.com",
   location: "123 Main St, City, State ZIP",
   phone: "(555) 000-0000",
   serviceArea: "City, Surrounding Counties",
@@ -135,11 +183,13 @@ In `worker.js`, append to `KNOWLEDGE_BASE.contentTypes`:
 ```javascript
 "new content type": {
   description: "Short description of the content format",
+  pathPrefix: "folder-name",
   sections: [
-    "1. Meta Tag & Description",
-    "2. Hero section requirements",
+    "1. URL slug, Title, and Meta Description",
+    "2. # **H1 Title**",
     "3. Clinical breakdown",
-    "4. FAQ & CTA"
+    "4. ## **Frequently Asked Questions**",
+    "5. ## **Ready to Connect?**"
   ]
 }
 ```
