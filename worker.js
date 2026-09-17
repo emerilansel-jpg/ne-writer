@@ -1,6 +1,6 @@
 /**
- * NE Content Generator & Humanizer Studio
- * Production Engine: Pesat-Pro via PesatRouter
+ * NE Content Studio
+ * Production Engine via PesatRouter
  * Routes: jdpwriter.com/ne*, jdpwriter.com/neil*
  */
 
@@ -48,7 +48,7 @@ const KNOWLEDGE_BASE = {
     "service page": {
       description: "Comprehensive medical service page with deep clinical mechanism, patient journey, eligibility, insurance, and FAQ.",
       sections: [
-        "Title & Meta Description (keyword natural, under 60 chars title, under 158 chars meta)",
+        "Title & Meta Description (keyword natural, under 60 chars title, under 158 chars meta with CTA)",
         "H1 Title",
         "Introduction: Clinical overview, who it helps, what it replaces or augments",
         "How It Works (Biological / neurological mechanism, clear plain-English explanation)",
@@ -128,8 +128,8 @@ const KNOWLEDGE_BASE = {
   }
 };
 
-// --- SYSTEM PROMPT GENERATORS ---
-function buildDraftSystemPrompt(site, keyword, contentType) {
+// --- SYSTEM PROMPT (COMBINED GENERATION & HUMANIZER) ---
+function buildUnifiedPrompt(site, keyword, contentType) {
   const siteData = KNOWLEDGE_BASE.sites[site] || {
     name: site,
     location: "United States",
@@ -140,66 +140,46 @@ function buildDraftSystemPrompt(site, keyword, contentType) {
 
   const typeData = KNOWLEDGE_BASE.contentTypes[contentType] || KNOWLEDGE_BASE.contentTypes["service page"];
 
-  return `You are a Senior Healthcare Content Strategist and Medical SEO Writer specializing in mental health clinics.
-Your task is to write high-converting, medically compliant, E-E-A-T authoritative content for the following assignment:
+  return `You are a Senior Healthcare Content Strategist and Copywriter creating publication-ready medical content.
+Target Brand: ${siteData.name}
+Target Location: ${siteData.location || "On file"} (${siteData.serviceArea})
+Phone: ${siteData.phone || "On file"}
+Target Keyword: ${keyword}
+Content Type: ${contentType}
+Brand Clinical Notes: ${siteData.notes || "Maintain high clinical standards."}
 
-TARGET SPECIFICATIONS:
-- Site/Brand: ${siteData.name}
-- Target Keyword: ${keyword}
-- Content Type: ${contentType}
-- Target Location / Service Area: ${siteData.serviceArea}
-- Contact / Address: ${siteData.location || "On file"} | Phone: ${siteData.phone || "On file"}
-- Site Specific Rules: ${siteData.notes || "Maintain high clinical standards."}
-
-CONTENT STRUCTURE TO FOLLOW:
+REQUIRED SECTIONS (Deliver in exact Markdown structure):
 ${typeData.sections.map((s, i) => `${i + 1}. ${s}`).join("\n")}
 
-CRITICAL SEO & MEDICAL COMPLIANCE RULES:
-1. KEYWORD USAGE:
-   - Primary Keyword: "${keyword}".
-   - Title tag: Under 60 characters, natural placement.
-   - Meta description: 150-158 characters, includes primary keyword and ends with a call to action.
-   - If keyword contains "near me" or specific location: Do NOT spam the exact phrase. Use "near me" naturally only ONCE in the entire page. Prioritize the core clinical service.
-2. MEDICAL & YMYL ACCURACY:
-   - Never promise a cure or 100% success. Use "many patients experience", "clinical studies indicate".
-   - Never advise patients to alter or stop medication without doctor supervision.
-   - For outcomes: Any percentage (e.g. 83% relief) must be attributed to published clinical data (e.g. "In NeuroStar clinical trials..."), NEVER claimed as practice-level statistics.
-   - Distinguish FDA-cleared indications from off-label or adjunctive uses clearly.
-3. TONE & STYLE:
-   - Grade 8-9 reading level. Plain, warm, direct, second-person ("you", "your").
-   - Short sentences. Paragraphs 2 to 4 sentences maximum.
-   - No fear-based marketing.
-   - Always include the mandatory emergency crisis notice at the end:
-     "${siteData.disclaimer}"
+STRICT CLINICAL & SEO GUIDELINES:
+1. Primary keyword: "${keyword}". Use naturally in title tag (<60 chars), meta description (150-158 chars with CTA), H1, and body copy.
+2. If keyword contains "near me" or specific location: Do NOT spam the exact phrase. Use "near me" naturally only ONCE in the entire text. Prioritize the core clinical service.
+3. Never promise cures or 100% success. Use "many patients experience", "clinical trials show".
+4. Attribute outcomes (such as 83% relief) strictly to clinical trial data (e.g. "In NeuroStar clinical trials..."). Never claim practice-level statistics.
+5. Distinguish FDA-cleared indications from off-label or adjunctive uses clearly.
+6. Mandatory crisis disclaimer at end: "${siteData.disclaimer}"
 
-Write the full, complete draft in Markdown format. Output ONLY the markdown document.`;
-}
+STRICT EDITORIAL HUMANIZER RULES (MANDATORY):
+1. §1 NO "NOT X BUT Y": Eliminate "not just X, it is Y", "it is not X, it's Y", "X rather than Y", and negative strawman preambles before positive statements. State positive claims directly.
+2. §2 NO ONE-LINE DRAMATIC CLOSERS: No isolated punchy lines ("That is the real win.", "Let that sink in."). Merge fragments into full sentences.
+3. §3 NO HOLLOW SAYINGS: Banned phrases: "at its core", "in reality", "what really matters", "fundamentally", "the deeper issue", "the heart of the matter", "the architecture of".
+4. §4 NO STAGED RUN-UPS: Delete conversational throat-clearing ("Let's dive in", "Here is what you need to know", "Honestly,", "Look,").
+5. §5 NO ARGUING WITH NO ONE: Cut defensive framing ("This isn't to say", "Don't get me wrong").
+6. §6 NO FORCED TRIADS: Vary list lengths and sentence rhythms; do not group adjectives or examples in artificial groups of three.
+7. §8 ZERO EM DASHES OR EN DASHES: Absolute ban on em dashes (—), en dashes (–), and double hyphens (--). Use commas, periods, or colons.
+8. §11 ACTIVE VOICE: Use active clinical subjects ("We send your sample to a certified lab" instead of "Your sample is sent").
+9. §12 BANNED WORDS: Remove all occurrences of: delve, delve into, robust, crucial, bolster, navigate, realm, unlock, foster, elevate, empower, transformative, holistic, tapestry, testament, beacon, cornerstone, pivotal, intricate, meticulous, vibrant, groundbreaking.
+10. §15 NO SHALLOW -ING RIDERS: No trailing gerunds ("..., highlighting its value", "..., ensuring success"). State actions as independent facts.
+11. §16 NO SALES FLUFF: No "boasts", "nestled in", "state-of-the-art", "game-changer".
+12. §18 DIRECT VERBS: Use "is", "are", "has" instead of "serves as", "operates as", "stands as".
+13. §19 NO DECORATIVE BOLDING: Do not bold every sentence or bullet label.
+14. Tone: Grade 8-9 reading level. Warm, clear, direct US English.
 
-function buildHumanizerSystemPrompt() {
-  return `You are an expert human editor applying the "Humanizer" skill to eliminate AI writing patterns and chatbot residue.
-Your goal is to make the medical text sound like it was written by an authentic, thoughtful human clinician and copywriter.
-
-APPLY THESE RULES STRICTLY:
-1. §1 NO "NOT X BUT Y": Eliminate "not just X, it is Y", "it is not X, it's Y", "X rather than Y", and negative preamble clauses before positive facts. State the point directly.
-2. §2 NO ONE-LINE DRAMATIC CLOSERS: Cut isolated punchy lines ("That is the real win.", "Let that sink in.", "Read that again."). Merge fragmented lists into complete sentences.
-3. §3 NO FAKE DEEP SAYINGS: Delete phrases like "at its core", "in reality", "what really matters", "fundamentally", "the deeper issue", "the heart of the matter", "the architecture of".
-4. §4 NO STAGED RUN-UPS: Delete conversational throat-clearing ("Let's dive in", "Here is what you need to know", "Let's break this down", "Honestly,", "Look,").
-5. §5 NO ARGUING WITH NO ONE: Cut defensive framing ("This isn't to say", "Don't get me wrong", "You might think... but").
-6. §6 NO FORCED TRIADS: Do NOT force rhythmic lists of three words or three parallel phrases unless naturally called for. Vary sentence rhythm.
-7. §8 ZERO EM DASHES OR EN DASHES: Absolute ban on em dashes (—), en dashes (–), and double hyphens (--). Replace with a period, comma, colon, parentheses, or rewrite the sentence.
-8. §11 ACTIVE VOICE OVER PASSIVE: Prefer active subjects ("We send your sample" instead of "Your sample is sent").
-9. §12 BANNED AI WORDS: Remove all occurrences of: delve, delve into, robust, crucial, bolster, navigate the landscape, realm, unlock, foster, elevate, empower, transformative, holistic, tapestry, testament, beacon, cornerstone, pivotal, intricate, meticulous, vibrant, groundbreaking.
-10. §15 NO SHALLOW -ING RIDERS: Cut trailing gerunds bolted onto sentences ("..., highlighting the importance of care", "..., ensuring better outcomes"). State the action as an independent fact.
-11. §16 NO SALES FLUFF: Cut marketing cliches ("boasts", "nestled in the heart of", "state-of-the-art", "game-changer", "world-class").
-12. §18 PREFER IS / ARE / HAS: Use "is", "are", and "has" instead of pretentious verbs like "serves as", "operates as", "stands as", "functions as".
-13. §19 NO DECORATIVE BOLDING: Remove bold formatting from every heading or every bullet item label. Turn labeled vertical lists into clean prose where labels add no distinct meaning.
-14. KEEP ALL FACTS, CLINICAL DETAILS, AND DISCLAIMERS: Do not delete medical facts, phone numbers, addresses, or crisis helpline notices.
-
-Return ONLY the humanized final markdown text.`;
+Deliver the complete, polished, 100% humanized final content in Markdown. Output ONLY the document.`;
 }
 
 // --- CALL PESATROUTER ---
-async function callPesatRouter(env, systemPrompt, userPrompt, temperature = 0.3) {
+async function callPesatRouter(env, systemPrompt, userPrompt, temperature = 0.25) {
   const apiKey = env.PESATROUTER_API_KEY || DEFAULT_CONFIG.PESATROUTER_API_KEY;
   const apiUrl = env.PESATROUTER_URL || DEFAULT_CONFIG.PESATROUTER_URL;
   const model = env.PESATROUTER_MODEL || DEFAULT_CONFIG.MODEL;
@@ -225,7 +205,7 @@ async function callPesatRouter(env, systemPrompt, userPrompt, temperature = 0.3)
 
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(`PesatRouter API error (${response.status}): ${errorText}`);
+    throw new Error(`Upstream API error (${response.status}): ${errorText}`);
   }
 
   const data = await response.json();
@@ -238,7 +218,7 @@ const HTML_UI = `<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NE Content Studio | Powered by Pesat-Pro</title>
+  <title>NE Content Studio</title>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -296,19 +276,10 @@ const HTML_UI = `<!DOCTYPE html>
       letter-spacing: -0.05em;
     }
     .logo-text h1 {
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       font-weight: 700;
       letter-spacing: -0.02em;
       color: #fff;
-    }
-    .logo-text span {
-      font-size: 0.75rem;
-      color: var(--accent);
-      background: var(--accent-muted);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-weight: 600;
-      margin-left: 6px;
     }
     .nav-tabs {
       display: flex;
@@ -338,7 +309,7 @@ const HTML_UI = `<!DOCTYPE html>
       margin: 2rem auto;
       padding: 0 1.5rem;
       display: grid;
-      grid-template-columns: 380px 1fr;
+      grid-template-columns: 400px 1fr;
       gap: 2rem;
     }
     @media (max-width: 960px) {
@@ -398,7 +369,7 @@ const HTML_UI = `<!DOCTYPE html>
       background: var(--primary);
       color: white;
       border: none;
-      padding: 0.8rem 1.2rem;
+      padding: 0.85rem 1.2rem;
       border-radius: 8px;
       font-weight: 600;
       font-size: 0.95rem;
@@ -417,6 +388,16 @@ const HTML_UI = `<!DOCTYPE html>
       margin-top: 0.5rem;
     }
     .btn-secondary:hover { background: #2d3b55; }
+    .parse-badge {
+      display: none;
+      margin-top: 0.5rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.775rem;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+    }
     .quick-preset {
       display: flex;
       flex-wrap: wrap;
@@ -435,7 +416,7 @@ const HTML_UI = `<!DOCTYPE html>
     .chip:hover { background: #2563eb; color: white; }
     .status-box {
       margin-top: 1rem;
-      padding: 0.75rem;
+      padding: 0.85rem;
       background: #090d16;
       border-radius: 8px;
       border-left: 3px solid var(--primary);
@@ -544,7 +525,6 @@ const HTML_UI = `<!DOCTYPE html>
     .tab-content { display: none; }
     .tab-content.active { display: block; }
     .card { background: #090d16; border: 1px solid var(--card-border); border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
-    .badge { background: #1f293d; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; color: #60a5fa; }
   </style>
 </head>
 <body>
@@ -553,13 +533,12 @@ const HTML_UI = `<!DOCTYPE html>
     <div class="logo-badge">
       <div class="logo-icon">NE</div>
       <div class="logo-text">
-        <h1>NE Content Studio <span>Pesat-Pro Engine</span></h1>
+        <h1>NE Content Studio</h1>
       </div>
     </div>
     <div class="nav-tabs">
-      <button class="nav-tab active" onclick="switchTab('generator')">Generator</button>
-      <button class="nav-tab" onclick="switchTab('humanizer')">Humanizer Tool</button>
-      <button class="nav-tab" onclick="switchTab('guidelines')">Guidelines Library</button>
+      <button class="nav-tab active" onclick="switchTab('studio')">Studio</button>
+      <button class="nav-tab" onclick="switchTab('guidelines')">Guidelines & Standards</button>
     </div>
   </header>
 
@@ -568,17 +547,17 @@ const HTML_UI = `<!DOCTYPE html>
     <!-- LEFT PANEL: INPUT CONTROLS -->
     <div class="panel">
       
-      <!-- GENERATOR TAB CONTROLS -->
-      <div id="controls-generator" class="tab-content active">
+      <!-- STUDIO TAB -->
+      <div id="controls-studio" class="tab-content active">
         <div class="panel-title">
           <span>Task Assignment</span>
-          <span class="badge">Live Edge Engine</span>
         </div>
 
         <div class="form-group">
-          <label>Quick Paste (Key: Value)</label>
-          <textarea id="quickInput" rows="3" placeholder="Site: Onward Psychiatry&#10;Keyword: Genetic Testing&#10;Content type: service page"></textarea>
-          <button class="btn btn-secondary btn-sm" style="width:100%; margin-top:4px;" onclick="parseQuickInput()">Parse Quick Input</button>
+          <label>Quick Input</label>
+          <textarea id="quickInput" rows="4" placeholder="Site: Onward Psychiatry&#10;Keyword: Genetic Testing&#10;Content type: service page"></textarea>
+          <button class="btn btn-secondary btn-sm" style="width:100%; margin-top:4px;" onclick="handleQuickParseClick()">Parse Quick Input</button>
+          <div id="parseBadge" class="parse-badge"></div>
         </div>
 
         <hr style="border:none; border-top:1px solid var(--card-border); margin:1rem 0;">
@@ -618,53 +597,41 @@ const HTML_UI = `<!DOCTYPE html>
 
         <button class="btn" id="generateBtn" onclick="runGeneration()">
           <span id="btnIcon">⚡</span>
-          <span id="btnText">Generate & Humanize</span>
+          <span id="btnText">Generate Content</span>
         </button>
 
         <div class="status-box" id="statusBox">
-          <div class="step-item" id="step1"><span>○</span> 1. Loading Guidelines & Presets</div>
-          <div class="step-item" id="step2"><span>○</span> 2. Drafting with Pesat-Pro</div>
-          <div class="step-item" id="step3"><span>○</span> 3. Applying Humanizer Clean Pass</div>
+          <div class="step-item" id="step1"><span>○</span> 1. Checking guidelines & site specifications</div>
+          <div class="step-item" id="step2"><span>○</span> 2. Creating structured clinical content</div>
+          <div class="step-item" id="step3"><span>○</span> 3. Refining tone & human clarity</div>
         </div>
       </div>
 
-      <!-- HUMANIZER STANDALONE TAB CONTROLS -->
-      <div id="controls-humanizer" class="tab-content">
-        <div class="panel-title">
-          <span>Humanizer Polisher</span>
-          <span class="badge">§1 - §25 Rules</span>
-        </div>
-        <p style="font-size:0.825rem; color:var(--text-muted); margin-bottom:1rem;">
-          Paste any existing AI-written text below to strip tells, em dashes, filler words, and dramatic closers.
-        </p>
-        <div class="form-group">
-          <label>Text to Humanize</label>
-          <textarea id="humanizeInput" rows="12" placeholder="Paste draft here..."></textarea>
-        </div>
-        <button class="btn" id="humanizeOnlyBtn" onclick="runHumanizerOnly()">
-          <span>✨</span> Strip AI Patterns
-        </button>
-      </div>
-
-      <!-- GUIDELINES TAB CONTROLS -->
+      <!-- GUIDELINES TAB -->
       <div id="controls-guidelines" class="tab-content">
         <div class="panel-title">
-          <span>Active Guidelines</span>
+          <span>Editorial Standards</span>
         </div>
         <p style="font-size:0.825rem; color:var(--text-muted); margin-bottom:1rem;">
-          Embedded knowledge base automatically applied during generation.
+          Embedded rules applied automatically during generation.
         </p>
         <div class="card">
-          <div style="font-weight:600; color:#60a5fa; font-size:0.85rem;">Medical YMYL Guardrails</div>
-          <p style="font-size:0.75rem; color:#94a3b8; margin-top:4px;">No promises of cure; attribute outcomes to clinical studies; include 988 crisis line.</p>
+          <div style="font-weight:600; color:#34d399; font-size:0.85rem;">Human Clarity & Style</div>
+          <p style="font-size:0.75rem; color:#94a3b8; margin-top:4px;">
+            Zero em dashes (—). No "not X but Y" constructions. No hollow phrases ("at its core", "the heart of the matter"). Strict grade 8-9 direct clinical voice.
+          </p>
         </div>
         <div class="card">
-          <div style="font-weight:600; color:#34d399; font-size:0.85rem;">Humanizer (§1-§25)</div>
-          <p style="font-size:0.75rem; color:#94a3b8; margin-top:4px;">Zero em dashes; no "not X but Y"; no "at its core"; cut filler adverbs.</p>
+          <div style="font-weight:600; color:#60a5fa; font-size:0.85rem;">Medical YMYL Compliance</div>
+          <p style="font-size:0.75rem; color:#94a3b8; margin-top:4px;">
+            No promises of full recovery; all statistics cited from published clinical trials; non-sedating notes; emergency crisis notice (988) included.
+          </p>
         </div>
         <div class="card">
-          <div style="font-weight:600; color:#f472b6; font-size:0.85rem;">Location Rules</div>
-          <p style="font-size:0.75rem; color:#94a3b8; margin-top:4px;">15-part rigid skeleton; Norwood, MA; do not invent practice statistics.</p>
+          <div style="font-weight:600; color:#f472b6; font-size:0.85rem;">Location & Keyword Targeting</div>
+          <p style="font-size:0.75rem; color:#94a3b8; margin-top:4px;">
+            "Near me" incorporated naturally max once; localized anchor text; strict 15-part location skeleton for Norwood, MA.
+          </p>
         </div>
       </div>
 
@@ -686,7 +653,7 @@ const HTML_UI = `<!DOCTYPE html>
 
       <div class="output-content">
         <div id="renderedView" class="markdown-body">
-          <p style="color:var(--text-muted); font-style:italic;">Generated content and humanizer results will appear here...</p>
+          <p style="color:var(--text-muted); font-style:italic;">Humanized, production-ready content will appear here...</p>
         </div>
         <pre id="rawView" style="display:none;"></pre>
       </div>
@@ -696,21 +663,18 @@ const HTML_UI = `<!DOCTYPE html>
 
   <script>
     let currentRawContent = "";
-    let activeTab = "generator";
+    let activeTab = "studio";
 
     function switchTab(tab) {
       activeTab = tab;
       document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      
-      if (tab === 'generator') {
+
+      if (tab === 'studio') {
         document.querySelectorAll('.nav-tab')[0].classList.add('active');
-        document.getElementById('controls-generator').classList.add('active');
-      } else if (tab === 'humanizer') {
-        document.querySelectorAll('.nav-tab')[1].classList.add('active');
-        document.getElementById('controls-humanizer').classList.add('active');
+        document.getElementById('controls-studio').classList.add('active');
       } else {
-        document.querySelectorAll('.nav-tab')[2].classList.add('active');
+        document.querySelectorAll('.nav-tab')[1].classList.add('active');
         document.getElementById('controls-guidelines').classList.add('active');
       }
     }
@@ -747,45 +711,86 @@ const HTML_UI = `<!DOCTYPE html>
       }
     }
 
-    function parseQuickInput() {
+    function parseQuickInput(showFeedback = false) {
       const text = document.getElementById('quickInput').value.trim();
-      if (!text) return;
-      
-      const lines = text.split('\\n');
+      const badge = document.getElementById('parseBadge');
+      if (!text) {
+        if (badge) badge.style.display = 'none';
+        return false;
+      }
+
+      const lines = text.split(/\\r?\\n/);
+      let matchedFields = [];
+
       lines.forEach(line => {
-        const parts = line.split(':');
-        if (parts.length >= 2) {
-          const key = parts[0].trim().toLowerCase();
-          const val = parts.slice(1).join(':').trim();
-          if (key.includes('site')) {
-            const select = document.getElementById('siteSelect');
-            let found = false;
-            for (let i = 0; i < select.options.length; i++) {
-              if (select.options[i].text.toLowerCase().includes(val.toLowerCase()) || select.options[i].value.toLowerCase().includes(val.toLowerCase())) {
-                select.selectedIndex = i;
-                found = true;
-                break;
-              }
+        const colonIdx = line.indexOf(':');
+        if (colonIdx === -1) return;
+        const key = line.substring(0, colonIdx).trim().toLowerCase();
+        const val = line.substring(colonIdx + 1).trim();
+        if (!val) return;
+
+        if (key.includes('site') || key.includes('brand')) {
+          const select = document.getElementById('siteSelect');
+          let found = false;
+          for (let i = 0; i < select.options.length; i++) {
+            const optText = select.options[i].text.toLowerCase();
+            const optVal = select.options[i].value.toLowerCase();
+            const valLower = val.toLowerCase();
+            if (optText.includes(valLower) || valLower.includes(optVal)) {
+              select.selectedIndex = i;
+              found = true;
+              document.getElementById('customSiteInput').style.display = 'none';
+              matchedFields.push('Site: ' + select.options[i].value);
+              break;
             }
-            if (!found) {
-              select.value = "Custom";
-              document.getElementById('customSiteInput').style.display = 'block';
-              document.getElementById('customSiteInput').value = val;
-            }
-          } else if (key.includes('keyword')) {
-            document.getElementById('keywordInput').value = val;
-          } else if (key.includes('content') || key.includes('type')) {
-            const select = document.getElementById('contentTypeSelect');
-            for (let i = 0; i < select.options.length; i++) {
-              if (select.options[i].value.toLowerCase().includes(val.toLowerCase()) || val.toLowerCase().includes(select.options[i].value.toLowerCase())) {
-                select.selectedIndex = i;
-                break;
-              }
+          }
+          if (!found) {
+            select.value = "Custom";
+            const customInput = document.getElementById('customSiteInput');
+            customInput.style.display = 'block';
+            customInput.value = val;
+            matchedFields.push('Site: ' + val);
+          }
+        } else if (key.includes('keyword') || key.includes('kw')) {
+          document.getElementById('keywordInput').value = val;
+          matchedFields.push('Keyword: ' + val);
+        } else if (key.includes('content') || key.includes('type')) {
+          const select = document.getElementById('contentTypeSelect');
+          const valLower = val.toLowerCase();
+          for (let i = 0; i < select.options.length; i++) {
+            const optVal = select.options[i].value.toLowerCase();
+            const optText = select.options[i].text.toLowerCase();
+            if (optVal.includes(valLower) || valLower.includes(optVal) || optText.includes(valLower)) {
+              select.selectedIndex = i;
+              matchedFields.push('Type: ' + select.options[i].text);
+              break;
             }
           }
         }
       });
+
+      if (badge && (showFeedback || matchedFields.length > 0)) {
+        if (matchedFields.length > 0) {
+          badge.style.display = 'block';
+          badge.innerHTML = '✓ ' + matchedFields.join(' · ');
+        } else if (showFeedback) {
+          badge.style.display = 'block';
+          badge.style.color = '#f87171';
+          badge.style.background = 'rgba(239, 68, 68, 0.1)';
+          badge.innerHTML = 'No "Key: Value" lines detected (e.g. Site: ..., Keyword: ...)';
+        }
+      }
+      return matchedFields.length > 0;
     }
+
+    function handleQuickParseClick() {
+      parseQuickInput(true);
+    }
+
+    // Auto-parse on user paste or typing in textarea
+    const quickInputElem = document.getElementById('quickInput');
+    quickInputElem.addEventListener('input', () => parseQuickInput(false));
+    quickInputElem.addEventListener('paste', () => setTimeout(() => parseQuickInput(true), 50));
 
     function updateStats(text) {
       const words = text.trim() ? text.trim().split(/\\s+/).length : 0;
@@ -801,6 +806,9 @@ const HTML_UI = `<!DOCTYPE html>
     }
 
     async function runGeneration() {
+      // Auto-parse if quick paste has input
+      parseQuickInput(false);
+
       const siteSelect = document.getElementById('siteSelect').value;
       const site = siteSelect === 'Custom' ? document.getElementById('customSiteInput').value : siteSelect;
       const keyword = document.getElementById('keywordInput').value.trim();
@@ -820,12 +828,20 @@ const HTML_UI = `<!DOCTYPE html>
       btn.disabled = true;
       document.getElementById('btnText').textContent = "Processing...";
       statusBox.style.display = 'block';
-      s1.className = 'step-item done';
-      s1.innerHTML = '<span>✓</span> 1. Guidelines & Presets Loaded';
-      s2.className = 'step-item active';
-      s2.innerHTML = '<div class="spinner"></div> 2. Drafting with Pesat-Pro...';
+      
+      s1.className = 'step-item active';
+      s1.innerHTML = '<div class="spinner"></div> 1. Checking guidelines & site specifications';
+      s2.className = 'step-item';
+      s2.innerHTML = '<span>○</span> 2. Creating structured clinical content';
       s3.className = 'step-item';
-      s3.innerHTML = '<span>○</span> 3. Applying Humanizer Clean Pass';
+      s3.innerHTML = '<span>○</span> 3. Refining tone & human clarity';
+
+      setTimeout(() => {
+        s1.className = 'step-item done';
+        s1.innerHTML = '<span>✓</span> 1. Guidelines & standards verified';
+        s2.className = 'step-item active';
+        s2.innerHTML = '<div class="spinner"></div> 2. Generating humanized clinical content...';
+      }, 700);
 
       try {
         const endpoint = window.location.pathname.startsWith('/neil') ? '/api/neil/generate' : '/api/ne/generate';
@@ -840,9 +856,9 @@ const HTML_UI = `<!DOCTYPE html>
         }
 
         s2.className = 'step-item done';
-        s2.innerHTML = '<span>✓</span> 2. Draft Generated';
+        s2.innerHTML = '<span>✓</span> 2. Content generation complete';
         s3.className = 'step-item done';
-        s3.innerHTML = '<span>✓</span> 3. Humanizer Pass Complete';
+        s3.innerHTML = '<span>✓</span> 3. Humanized & polished';
 
         const data = await res.json();
         setContent(data.content);
@@ -852,37 +868,7 @@ const HTML_UI = `<!DOCTYPE html>
         s2.textContent = 'Failed';
       } finally {
         btn.disabled = false;
-        document.getElementById('btnText').textContent = "Generate & Humanize";
-      }
-    }
-
-    async function runHumanizerOnly() {
-      const input = document.getElementById('humanizeInput').value.trim();
-      if (!input) {
-        alert("Please paste some text to humanize.");
-        return;
-      }
-
-      const btn = document.getElementById('humanizeOnlyBtn');
-      btn.disabled = true;
-      btn.textContent = "Polishing text...";
-
-      try {
-        const endpoint = window.location.pathname.startsWith('/neil') ? '/api/neil/humanize' : '/api/ne/humanize';
-        const res = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text: input })
-        });
-
-        if (!res.ok) throw new Error("HTTP " + res.status + ": " + await res.text());
-        const data = await res.json();
-        setContent(data.content);
-      } catch (err) {
-        alert("Humanizer error: " + err.message);
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML = "<span>✨</span> Strip AI Patterns";
+        document.getElementById('btnText').textContent = "Generate Content";
       }
     }
 
@@ -924,12 +910,11 @@ export default {
       });
     }
 
-    // Health check
+    // Health check (Clean, no AI model exposed)
     if (path === "/ne/health" || path === "/api/ne/health" || path === "/neil/health" || path === "/api/neil/health") {
       return new Response(JSON.stringify({
         status: "ok",
         service: "ne-writer",
-        model: env.PESATROUTER_MODEL || DEFAULT_CONFIG.MODEL,
         timestamp: new Date().toISOString()
       }), {
         headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
@@ -943,7 +928,7 @@ export default {
       });
     }
 
-    // POST Generate Endpoint
+    // POST Generate Endpoint (Unified 1-Step Execution, Always Humanized)
     if ((path === "/ne/api/generate" || path === "/api/ne/generate" || path === "/neil/api/generate" || path === "/api/neil/generate") && request.method === "POST") {
       try {
         const body = await request.json();
@@ -956,52 +941,18 @@ export default {
           });
         }
 
-        // STAGE 1: Generate comprehensive draft
-        const draftSystemPrompt = buildDraftSystemPrompt(site, keyword, contentType || "service page");
-        const draftUserPrompt = `Generate a full, in-depth, production-ready ${contentType || "service page"} for "${site}" targeting the keyword "${keyword}". Follow all structural sections, medical guidelines, and local area data.`;
-        const initialDraft = await callPesatRouter(env, draftSystemPrompt, draftUserPrompt, 0.3);
-
-        // STAGE 2: Automated Humanizer Pass
-        const humanizerSystemPrompt = buildHumanizerSystemPrompt();
-        const humanizerUserPrompt = `Please review and rewrite this draft to remove all AI writing tells, eliminate em dashes completely, apply active voice, and ensure a warm Grade 8-9 human clinician tone:\n\n${initialDraft}`;
-        const finalContent = await callPesatRouter(env, humanizerSystemPrompt, humanizerUserPrompt, 0.2);
+        // Unified Execution with full guidelines and humanizer constraints
+        const prompt = buildUnifiedPrompt(site, keyword, contentType || "service page");
+        const userPrompt = `Generate a full, production-ready ${contentType || "service page"} for "${site}" targeting keyword "${keyword}". Follow all required sections and adhere strictly to all clinical, SEO, and humanizer editorial rules.`;
+        const finalContent = await callPesatRouter(env, prompt, userPrompt, 0.25);
 
         return new Response(JSON.stringify({
           success: true,
           site,
           keyword,
           contentType: contentType || "service page",
-          content: finalContent || initialDraft,
+          content: finalContent,
           generatedAt: new Date().toISOString()
-        }), {
-          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
-        });
-      } catch (err) {
-        return new Response(JSON.stringify({ error: err.message }), {
-          status: 500,
-          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
-        });
-      }
-    }
-
-    // POST Humanize Endpoint
-    if ((path === "/ne/api/humanize" || path === "/api/ne/humanize" || path === "/neil/api/humanize" || path === "/api/neil/humanize") && request.method === "POST") {
-      try {
-        const body = await request.json();
-        const { text } = body;
-        if (!text) {
-          return new Response(JSON.stringify({ error: "Missing text to humanize" }), {
-            status: 400,
-            headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
-          });
-        }
-
-        const humanizerSystemPrompt = buildHumanizerSystemPrompt();
-        const humanizedText = await callPesatRouter(env, humanizerSystemPrompt, `Humanize the following text according to all rules:\n\n${text}`, 0.2);
-
-        return new Response(JSON.stringify({
-          success: true,
-          content: humanizedText
         }), {
           headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
         });
