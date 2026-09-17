@@ -1,7 +1,7 @@
 {
-  "name": "neil-emmett-writer",
+  "name": "ne-writer",
   "version": "1.0.0",
-  "description": "Neil Emmett Content Generator & Humanizer Pipeline powered by Pesat-Pro",
+  "description": "NE Content Generator & Humanizer Studio powered by Pesat-Pro",
   "main": "worker.js",
   "scripts": {
     "dev": "wrangler dev",
@@ -9,7 +9,7 @@
   },
   "keywords": [
     "cloudflare-worker",
-    "content-generator",
+    "ne-writer",
     "humanizer",
     "pesat-pro"
   ],

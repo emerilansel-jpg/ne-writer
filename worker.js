@@ -1,7 +1,7 @@
 /**
- * Neil Emmett Content Generator & Humanizer Worker
+ * NE Content Generator & Humanizer Studio
  * Production Engine: Pesat-Pro via PesatRouter
- * Route: jdpwriter.com/neil*
+ * Routes: jdpwriter.com/ne*, jdpwriter.com/neil*
  */
 
 const DEFAULT_CONFIG = {
@@ -238,7 +238,7 @@ const HTML_UI = `<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Neil Emmett Content Studio | Powered by Pesat-Pro</title>
+  <title>NE Content Studio | Powered by Pesat-Pro</title>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -290,9 +290,10 @@ const HTML_UI = `<!DOCTYPE html>
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 700;
+      font-weight: 800;
       color: white;
       font-size: 1.1rem;
+      letter-spacing: -0.05em;
     }
     .logo-text h1 {
       font-size: 1.15rem;
@@ -550,9 +551,9 @@ const HTML_UI = `<!DOCTYPE html>
 
   <header class="header">
     <div class="logo-badge">
-      <div class="logo-icon">N</div>
+      <div class="logo-icon">NE</div>
       <div class="logo-text">
-        <h1>Neil Emmett Content Studio <span>Pesat-Pro Engine</span></h1>
+        <h1>NE Content Studio <span>Pesat-Pro Engine</span></h1>
       </div>
     </div>
     <div class="nav-tabs">
@@ -827,7 +828,8 @@ const HTML_UI = `<!DOCTYPE html>
       s3.innerHTML = '<span>○</span> 3. Applying Humanizer Clean Pass';
 
       try {
-        const res = await fetch('/api/neil/generate', {
+        const endpoint = window.location.pathname.startsWith('/neil') ? '/api/neil/generate' : '/api/ne/generate';
+        const res = await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ site, keyword, contentType })
@@ -866,7 +868,8 @@ const HTML_UI = `<!DOCTYPE html>
       btn.textContent = "Polishing text...";
 
       try {
-        const res = await fetch('/api/neil/humanize', {
+        const endpoint = window.location.pathname.startsWith('/neil') ? '/api/neil/humanize' : '/api/ne/humanize';
+        const res = await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ text: input })
@@ -922,10 +925,10 @@ export default {
     }
 
     // Health check
-    if (path === "/neil/health" || path === "/api/neil/health") {
+    if (path === "/ne/health" || path === "/api/ne/health" || path === "/neil/health" || path === "/api/neil/health") {
       return new Response(JSON.stringify({
         status: "ok",
-        service: "neil-emmett-writer",
+        service: "ne-writer",
         model: env.PESATROUTER_MODEL || DEFAULT_CONFIG.MODEL,
         timestamp: new Date().toISOString()
       }), {
@@ -934,14 +937,14 @@ export default {
     }
 
     // Guidelines Library API
-    if (path === "/neil/api/guidelines" || path === "/api/neil/guidelines") {
+    if (path === "/ne/api/guidelines" || path === "/api/ne/guidelines" || path === "/neil/api/guidelines" || path === "/api/neil/guidelines") {
       return new Response(JSON.stringify(KNOWLEDGE_BASE), {
         headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
       });
     }
 
-    // POST /api/neil/generate (Two-Stage Pipeline: Draft -> Humanize)
-    if ((path === "/neil/api/generate" || path === "/api/neil/generate") && request.method === "POST") {
+    // POST Generate Endpoint
+    if ((path === "/ne/api/generate" || path === "/api/ne/generate" || path === "/neil/api/generate" || path === "/api/neil/generate") && request.method === "POST") {
       try {
         const body = await request.json();
         const { site, keyword, contentType } = body;
@@ -981,8 +984,8 @@ export default {
       }
     }
 
-    // POST /api/neil/humanize (Standalone Humanizer Tool)
-    if ((path === "/neil/api/humanize" || path === "/api/neil/humanize") && request.method === "POST") {
+    // POST Humanize Endpoint
+    if ((path === "/ne/api/humanize" || path === "/api/ne/humanize" || path === "/neil/api/humanize" || path === "/api/neil/humanize") && request.method === "POST") {
       try {
         const body = await request.json();
         const { text } = body;
@@ -1010,7 +1013,7 @@ export default {
       }
     }
 
-    // Default: Serve Web UI on /neil, /neil/*, /neil-emmett*, or root on workers.dev
+    // Default: Serve Web UI
     return new Response(HTML_UI, {
       headers: {
         "Content-Type": "text/html; charset=utf-8",
