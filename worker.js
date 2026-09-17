@@ -15,6 +15,7 @@ const KNOWLEDGE_BASE = {
   sites: {
     "Onward Psychiatry": {
       name: "Onward Psychiatry",
+      domain: "https://onwardpsychiatry.com",
       location: "1 Walpole St #6, Norwood, MA 02062",
       phone: "(617) 958-6036",
       serviceArea: "Norwood, Walpole, Dedham, Canton, Westwood, Sharon, Norfolk County, Greater Boston",
@@ -25,6 +26,7 @@ const KNOWLEDGE_BASE = {
     },
     "Liberty TMS": {
       name: "Liberty TMS",
+      domain: "https://libertytms.com",
       location: "North Carolina and Colorado",
       phone: "(910) 838-9811",
       serviceArea: "Serving military and civilian communities near Fort Liberty (NC), Fort Carson, Peterson SFB, Schriever SFB, US Air Force Academy (CO)",
@@ -35,6 +37,7 @@ const KNOWLEDGE_BASE = {
     },
     "Fayetteville TMS": {
       name: "Fayetteville TMS",
+      domain: "https://fayettevilletms.com",
       location: "Fayetteville, NC (off-post)",
       phone: "(910) 838-9811",
       serviceArea: "Fort Liberty, Pope Field, Cumberland County military and civilian families",
@@ -47,86 +50,118 @@ const KNOWLEDGE_BASE = {
   contentTypes: {
     "service page": {
       description: "Comprehensive medical service page with deep clinical mechanism, patient journey, eligibility, insurance, and FAQ.",
+      pathPrefix: "services",
       sections: [
-        "Title & Meta Description (keyword natural, under 60 chars title, under 158 chars meta with CTA)",
-        "H1 Title",
-        "Introduction: Clinical overview, who it helps, what it replaces or augments",
-        "How It Works (Biological / neurological mechanism, clear plain-English explanation)",
-        "Conditions Treated (bulleted breakdown: MDD, TRD, Anxiety, OCD, etc.)",
-        "What [Service] Can and Cannot Do (Clear boundaries to manage patient expectations)",
-        "The Clinical Process (Step-by-step: consult, testing/prep, administration, review/plan)",
-        "Candidacy & Who Is a Candidate (Clear inclusion/exclusion checklist)",
-        "Core Patient Benefits (Tangible quality of life and clinical advantages)",
-        "Costs and Insurance Coverage (Commercial, Medicare/Medicaid, prior authorization, self-pay assistance)",
-        "Why Choose [Site Name] (Local ties, clinician expertise, collaborative care)",
-        "Frequently Asked Questions (6 to 8 patient questions with direct first-sentence answers)",
-        "Ready to Get Started? (Actionable CTA, phone, address, and compliant crisis disclaimer)"
+        "1. URL slug, Title, and Meta Description",
+        "2. # **H1 Title**",
+        "3. Introduction (Clinical overview, who it helps, what it replaces or augments)",
+        "4. ## **How It Works** (Biological / neurological mechanism, clear plain-English explanation)",
+        "5. ## **Conditions Treated** (bulleted breakdown: MDD, TRD, Anxiety, OCD, etc.)",
+        "6. ## **What [Service] Can and Cannot Do** (Clear clinical boundaries to manage patient expectations)",
+        "7. ## **The Clinical Process** (Step-by-step with H3: Consultation, Administration/Testing, Treatment Plan, Monitoring)",
+        "8. ## **Who Is a Candidate** (Clear inclusion/exclusion checklist)",
+        "9. ## **Core Patient Benefits** (Tangible quality of life and clinical advantages)",
+        "10. ## **Costs and Insurance Coverage** (Commercial, Medicare/Medicaid, prior authorization, self-pay assistance)",
+        "11. ## **Why Choose [Site Name]** (Local ties, clinician expertise, collaborative care)",
+        "12. ## **Frequently Asked Questions** (6 to 8 patient questions with H3 and direct first-sentence answers)",
+        "13. ## **Ready to Get Started?** (Actionable CTA, phone, address, and compliant crisis disclaimer)"
       ]
     },
     "location page": {
       description: "Rigid 15-part location skeleton for localized SEO (Norwood MA / Norfolk County format).",
+      pathPrefix: "locations",
       sections: [
-        "1. Meta (Title <60 chars, Meta Desc 150-158 chars with primary keyword)",
-        "2. Hero (H1 with exact match keyword, Eyebrow, introductory paragraph naming core cities)",
-        "3. Condition Chips (6 conditions: MDD, TRD, OCD, Anxious Depression, Anxiety, Bipolar)",
-        "4. Lead Form block (response time within a day, insurance coordination, phone fallback)",
-        "5. Stat Bar (83% symptom relief attributed to NeuroStar, 19 min session, 2008 FDA clearance)",
-        "6. Trust Badges (5 badges, including 'Serving Norwood, Walpole, Dedham and Canton')",
-        "7. Name, Address, Phone and Map Block (NAP, hours, also serving list)",
-        "8. Testimonials intro & 3 reviews (initials attribution)",
-        "9. Process (H2 with location, 3 steps: Step 1 brain mapping, Step 2 plan, Step 3 daily sessions with drive-home note)",
-        "10. Conditions Treated (6 cards in exact order: MDD, TRD, OCD, Anxious Depression, Bipolar, PTSD/Other)",
-        "11. Why Us (4 blocks: insurance upfront, FDA-cleared tech, busy life, consistent care)",
-        "12. Team (H2 with location, Hannah Lynch featured bio + provider cards)",
-        "13. Insurance and Cost (Featured snippet target, direct answer, carrier list, prior authorization)",
-        "14. Directions and Parking (near Norwood Hospital, turn-by-turn from Norwood Center, drive times)",
-        "15. FAQ (10 questions with direct answers first, at least 3 containing city name)",
-        "16. Final CTA (4 bullets, phone, address, crisis notice)"
+        "1. URL slug, Title (<60 chars), Meta Description (150-158 chars with primary keyword)",
+        "2. # **H1 Title** (contains exact match primary keyword)",
+        "3. Eyebrow & Hero paragraph (naming core cities Norwood, Walpole, Dedham, Canton)",
+        "4. Condition Chips (6 conditions: MDD, TRD, OCD, Anxious Depression, Anxiety, Bipolar)",
+        "5. Lead Form block (response time within a day, insurance coordination, phone fallback)",
+        "6. Stat Bar (83% symptom relief attributed to NeuroStar, 19 min session, 2008 FDA clearance)",
+        "7. Trust Badges (5 badges, including 'Serving Norwood, Walpole, Dedham and Canton')",
+        "8. Name, Address, Phone and Map Block (NAP, hours, also serving list)",
+        "9. Testimonials intro & 3 reviews (initials attribution)",
+        "10. ## **Process** (H2 with location, 3 steps: Step 1 brain mapping, Step 2 plan, Step 3 daily sessions with drive-home note)",
+        "11. ## **Conditions Treated** (6 cards in exact order: MDD, TRD, OCD, Anxious Depression, Bipolar, PTSD/Other)",
+        "12. ## **Why Us** (4 blocks: insurance upfront, FDA-cleared tech, busy life, consistent care)",
+        "13. ## **Team** (H2 with location, Hannah Lynch featured bio + provider cards)",
+        "14. ## **Insurance and Cost** (Featured snippet target, direct answer, carrier list, prior authorization)",
+        "15. ## **Directions and Parking** (near Norwood Hospital, turn-by-turn from Norwood Center, drive times)",
+        "16. ## **Frequently Asked Questions** (10 questions with direct answers first, at least 3 containing city name)",
+        "17. ## **Final CTA** (4 bullets, phone, address, crisis notice)"
       ]
     },
     "sub category / who we serve": {
       description: "Targeted sub-pillar page focusing on specific demographic groups (active-duty, veterans, pregnant women).",
+      pathPrefix: "who-we-serve",
       sections: [
-        "Title & Meta Description",
-        "H1 Title with demographic focus",
-        "Operational Strain & Realities (Daily life context, why standard medications fell short)",
-        "Technology Overview (FDA-cleared indications vs non-cleared adjunctive benefits)",
-        "Comparison Table (TMS vs Oral Medications vs Psychotherapy)",
-        "Privacy & Administrative Policies (Civilian records, command notification, security clearance SF-86)",
-        "Step-by-Step Evaluation & Benefit Navigation (TRICARE Prime/Select, VA CCN)",
-        "Targeted FAQs",
-        "CTA with direct contact info"
+        "1. URL slug, Title, and Meta Description",
+        "2. # **H1 Title with demographic focus**",
+        "3. Operational Strain & Realities (Daily life context, why standard medications fell short)",
+        "4. ## **Technology Overview** (FDA-cleared indications vs non-cleared adjunctive benefits)",
+        "5. ## **Comparison Table** (TMS vs Oral Medications vs Psychotherapy)",
+        "6. ## **Privacy & Administrative Policies** (Civilian records, command notification, security clearance SF-86)",
+        "7. ## **Step-by-Step Evaluation & Benefit Navigation** (TRICARE Prime/Select, VA CCN)",
+        "8. ## **Frequently Asked Questions**",
+        "9. ## **Ready to Get Started?** (CTA with direct contact info and crisis notice)"
       ]
     },
     "about / accreditations": {
       description: "E-E-A-T trust page verifying medical licenses, board certifications, and technology clearances.",
+      pathPrefix: "about",
       sections: [
-        "Title & Meta Description",
-        "H1 Accreditations & Certifications",
-        "Clinical Oversight & Licensing Standards (State medical board licenses, NPI federal registry, APA guidelines)",
-        "FDA Clearances (Clear dates: MDD Oct 2008, OCD May 2022, Anxious Depression July 2022; device vs facility distinction)",
-        "Certified Clinical Operators (Manufacturer training benchmarks)",
-        "Insurance Credentialing & Military Network Coverage",
-        "Verification FAQs (How referring providers and patients can independently check credentials)",
-        "CTA with verified contact info"
+        "1. URL slug, Title, and Meta Description",
+        "2. # **Accreditations & Certifications**",
+        "3. ## **Clinical Oversight & Licensing Standards** (State medical board licenses, NPI federal registry, APA guidelines)",
+        "4. ## **FDA Clearances** (Clear dates: MDD Oct 2008, OCD May 2022, Anxious Depression July 2022; device vs facility distinction)",
+        "5. ## **Certified Clinical Operators** (Manufacturer training benchmarks)",
+        "6. ## **Insurance Credentialing & Military Network Coverage**",
+        "7. ## **Frequently Asked Questions** (How referring providers and patients can independently check credentials)",
+        "8. ## **Ready to Connect?** (CTA with verified contact info and crisis notice)"
       ]
     },
     "informational page": {
       description: "Educational guide answering user queries (e.g. treatment costs, procedure guide, preparation).",
+      pathPrefix: "resources",
       sections: [
-        "Title & Meta Description",
-        "H1 Guide Title",
-        "Direct Answer Box (Featured snippet target)",
-        "Detailed Breakdown of Factors and Costs",
-        "Insurance Coverage & Out-of-Pocket Estimates",
-        "Comparison / Decision Criteria",
-        "Step-by-Step Patient Next Steps",
-        "Comprehensive FAQs",
-        "Clinical Consultation CTA"
+        "1. URL slug, Title, and Meta Description",
+        "2. # **H1 Guide Title**",
+        "3. Direct Answer Box (Featured snippet target)",
+        "4. ## **Detailed Breakdown of Factors and Costs**",
+        "5. ## **Insurance Coverage & Out-of-Pocket Estimates**",
+        "6. ## **Comparison / Decision Criteria**",
+        "7. ## **Step-by-Step Patient Next Steps**",
+        "8. ## **Frequently Asked Questions**",
+        "9. ## **Clinical Consultation CTA** (CTA and crisis notice)"
       ]
     }
   }
 };
+
+// --- URL SLUG HELPER ---
+function generateSlug(text) {
+  return text.toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function getSiteDomain(site) {
+  const s = site.toLowerCase();
+  if (s.includes('onward')) return 'https://onwardpsychiatry.com';
+  if (s.includes('liberty')) return 'https://libertytms.com';
+  if (s.includes('fayetteville')) return 'https://fayettevilletms.com';
+  return 'https://' + generateSlug(site) + '.com';
+}
+
+function getExpectedUrl(site, keyword, contentType) {
+  const domain = getSiteDomain(site);
+  const slug = generateSlug(keyword);
+  const ct = contentType.toLowerCase();
+  if (ct.includes('service')) return `${domain}/services/${slug}/`;
+  if (ct.includes('location')) return `${domain}/locations/${slug}/`;
+  if (ct.includes('who we serve') || ct.includes('sub category')) return `${domain}/who-we-serve/${slug}/`;
+  if (ct.includes('about')) return `${domain}/about/${slug}/`;
+  return `${domain}/${slug}/`;
+}
 
 // --- SYSTEM PROMPT (COMBINED GENERATION & HUMANIZER) ---
 function buildUnifiedPrompt(site, keyword, contentType) {
@@ -139,6 +174,7 @@ function buildUnifiedPrompt(site, keyword, contentType) {
   };
 
   const typeData = KNOWLEDGE_BASE.contentTypes[contentType] || KNOWLEDGE_BASE.contentTypes["service page"];
+  const expectedUrl = getExpectedUrl(siteData.name, keyword, contentType);
 
   return `You are a Senior Healthcare Content Strategist and Copywriter creating publication-ready medical content.
 Target Brand: ${siteData.name}
@@ -148,8 +184,15 @@ Target Keyword: ${keyword}
 Content Type: ${contentType}
 Brand Clinical Notes: ${siteData.notes || "Maintain high clinical standards."}
 
-REQUIRED SECTIONS (Deliver in exact Markdown structure):
-${typeData.sections.map((s, i) => `${i + 1}. ${s}`).join("\n")}
+MANDATORY DOCUMENT HEADER (Must be the EXACT first 4 lines of your response, no markdown preambles or greetings):
+URL: ${expectedUrl}
+Title: [Meta Title under 60 characters with primary keyword and brand name]
+Meta Description: [150 to 158 characters with primary keyword, ending with an active call to action]
+
+# **[H1 Headline]**
+
+REQUIRED SECTIONS TO INCLUDE IN BODY:
+${typeData.sections.slice(2).join("\n")}
 
 STRICT CLINICAL & SEO GUIDELINES:
 1. Primary keyword: "${keyword}". Use naturally in title tag (<60 chars), meta description (150-158 chars with CTA), H1, and body copy.
@@ -173,9 +216,37 @@ STRICT EDITORIAL HUMANIZER RULES (MANDATORY):
 11. §16 NO SALES FLUFF: No "boasts", "nestled in", "state-of-the-art", "game-changer".
 12. §18 DIRECT VERBS: Use "is", "are", "has" instead of "serves as", "operates as", "stands as".
 13. §19 NO DECORATIVE BOLDING: Do not bold every sentence or bullet label.
-14. Tone: Grade 8-9 reading level. Warm, clear, direct US English.
+14. Heading format: Use Markdown bold inside headings matching the examples (# **Title**, ## **Section**, ### **Subheading**).
+15. Tone: Grade 8-9 reading level. Warm, clear, direct US English.
 
-Deliver the complete, polished, 100% humanized final content in Markdown. Output ONLY the document.`;
+Deliver the complete, polished, 100% humanized final content in Markdown. Line 1 MUST begin with "URL: ${expectedUrl}".`;
+}
+
+// --- POST PROCESSOR TO GUARANTEE URL HEADER ---
+function formatContentOutput(rawContent, expectedUrl, site, keyword) {
+  let text = (rawContent || "").trim();
+
+  // If output does not start with URL:, ensure URL header is injected at line 1
+  if (!text.toLowerCase().startsWith("url:")) {
+    // Check if it starts with Title: or **Title
+    if (text.toLowerCase().startsWith("title:") || text.toLowerCase().startsWith("**title")) {
+      text = `URL: ${expectedUrl}\n\n` + text;
+    } else {
+      // Find where H1 starts
+      const h1Match = text.match(/#\s+/);
+      if (h1Match && h1Match.index > 0) {
+        const preH1 = text.substring(0, h1Match.index).trim();
+        const postH1 = text.substring(h1Match.index);
+        if (!preH1.toLowerCase().includes("url:")) {
+          text = `URL: ${expectedUrl}\n` + preH1 + "\n\n" + postH1;
+        }
+      } else {
+        text = `URL: ${expectedUrl}\n\n` + text;
+      }
+    }
+  }
+
+  return text;
 }
 
 // --- CALL PESATROUTER ---
@@ -602,7 +673,7 @@ const HTML_UI = `<!DOCTYPE html>
 
         <div class="status-box" id="statusBox">
           <div class="step-item" id="step1"><span>○</span> 1. Checking guidelines & site specifications</div>
-          <div class="step-item" id="step2"><span>○</span> 2. Creating structured clinical content</div>
+          <div class="step-item" id="step2"><span>○</span> 2. Creating structured clinical content with URL slug</div>
           <div class="step-item" id="step3"><span>○</span> 3. Refining tone & human clarity</div>
         </div>
       </div>
@@ -615,6 +686,12 @@ const HTML_UI = `<!DOCTYPE html>
         <p style="font-size:0.825rem; color:var(--text-muted); margin-bottom:1rem;">
           Embedded rules applied automatically during generation.
         </p>
+        <div class="card">
+          <div style="font-weight:600; color:#38bdf8; font-size:0.85rem;">Mandatory URL & Meta Structure</div>
+          <p style="font-size:0.75rem; color:#94a3b8; margin-top:4px;">
+            Line 1 is always the canonical URL slug (e.g. URL: https://site.com/services/slug/), followed by Title and Meta Description before the H1 heading.
+          </p>
+        </div>
         <div class="card">
           <div style="font-weight:600; color:#34d399; font-size:0.85rem;">Human Clarity & Style</div>
           <p style="font-size:0.75rem; color:#94a3b8; margin-top:4px;">
@@ -653,7 +730,7 @@ const HTML_UI = `<!DOCTYPE html>
 
       <div class="output-content">
         <div id="renderedView" class="markdown-body">
-          <p style="color:var(--text-muted); font-style:italic;">Humanized, production-ready content will appear here...</p>
+          <p style="color:var(--text-muted); font-style:italic;">Humanized, production-ready content with URL slug will appear here...</p>
         </div>
         <pre id="rawView" style="display:none;"></pre>
       </div>
@@ -832,7 +909,7 @@ const HTML_UI = `<!DOCTYPE html>
       s1.className = 'step-item active';
       s1.innerHTML = '<div class="spinner"></div> 1. Checking guidelines & site specifications';
       s2.className = 'step-item';
-      s2.innerHTML = '<span>○</span> 2. Creating structured clinical content';
+      s2.innerHTML = '<span>○</span> 2. Creating structured clinical content with URL slug';
       s3.className = 'step-item';
       s3.innerHTML = '<span>○</span> 3. Refining tone & human clarity';
 
@@ -840,7 +917,7 @@ const HTML_UI = `<!DOCTYPE html>
         s1.className = 'step-item done';
         s1.innerHTML = '<span>✓</span> 1. Guidelines & standards verified';
         s2.className = 'step-item active';
-        s2.innerHTML = '<div class="spinner"></div> 2. Generating humanized clinical content...';
+        s2.innerHTML = '<div class="spinner"></div> 2. Generating humanized clinical content with URL slug...';
       }, 700);
 
       try {
@@ -910,7 +987,7 @@ export default {
       });
     }
 
-    // Health check (Clean, no AI model exposed)
+    // Health check
     if (path === "/ne/health" || path === "/api/ne/health" || path === "/neil/health" || path === "/api/neil/health") {
       return new Response(JSON.stringify({
         status: "ok",
@@ -928,7 +1005,7 @@ export default {
       });
     }
 
-    // POST Generate Endpoint (Unified 1-Step Execution, Always Humanized)
+    // POST Generate Endpoint (Unified 1-Step Execution, Guaranteed URL Slug & Humanized)
     if ((path === "/ne/api/generate" || path === "/api/ne/generate" || path === "/neil/api/generate" || path === "/api/neil/generate") && request.method === "POST") {
       try {
         const body = await request.json();
@@ -941,16 +1018,21 @@ export default {
           });
         }
 
+        const expectedUrl = getExpectedUrl(site, keyword, contentType || "service page");
+
         // Unified Execution with full guidelines and humanizer constraints
         const prompt = buildUnifiedPrompt(site, keyword, contentType || "service page");
-        const userPrompt = `Generate a full, production-ready ${contentType || "service page"} for "${site}" targeting keyword "${keyword}". Follow all required sections and adhere strictly to all clinical, SEO, and humanizer editorial rules.`;
-        const finalContent = await callPesatRouter(env, prompt, userPrompt, 0.25);
+        const userPrompt = `Generate the complete, publication-ready ${contentType || "service page"} for "${site}" targeting keyword "${keyword}". Line 1 must begin with "URL: ${expectedUrl}". Follow all required sections, heading bold styles, clinical guidelines, and humanizer editorial rules.`;
+        
+        const rawContent = await callPesatRouter(env, prompt, userPrompt, 0.25);
+        const finalContent = formatContentOutput(rawContent, expectedUrl, site, keyword);
 
         return new Response(JSON.stringify({
           success: true,
           site,
           keyword,
           contentType: contentType || "service page",
+          url: expectedUrl,
           content: finalContent,
           generatedAt: new Date().toISOString()
         }), {
