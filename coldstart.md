@@ -44,7 +44,7 @@ Traffic to https://jdpwriter.com
 ## 2. Iteration Highlights & Key Fixes (2026-09-17)
 
 ### A. Naming
-- Renamed project and worker from `neil-emmett-writer` to **`ne-writer` (NE)**.
+- Renamed project and worker to **`ne-writer` (NE)**.
 - Clean header title: **NE Content Studio**.
 - GitHub repo renamed to `https://github.com/emerilansel-jpg/ne-writer`.
 
@@ -195,8 +195,21 @@ In `worker.js`, append to `KNOWLEDGE_BASE.contentTypes`:
 ```
 
 ### Redeploying to Cloudflare:
-From `F:\Neil Emmet Project`:
+From `F:\NE Project`:
 ```bash
 CLOUDFLARE_API_TOKEN="$CLOUDFLARE_API_TOKEN" npx wrangler deploy
 git add . && git commit -m "feat: add new guidelines" && git push
 ```
+
+---
+
+## 2026-09-21 — Privacy Sanitization & GSD Audit-Fix (PM Mode)
+- **Status:** COMPLETED
+- **Files touched:**
+  - `worker.js`: Added DOMPurify for XSS-safe Markdown rendering, extended routing to catch `/health` and `/guidelines` on `workers.dev`, enforced Humanizer Rule §8 em dash stripping, added code fence stripper, improved dynamic footer regex for custom sites, added 90s fetch timeout.
+  - `package.json`: Added `"type": "module"`, added test script, verified description uses "NE".
+  - `test.js`: Added 6 unit tests (slug, URL structure, humanizer cleanup, custom footers, routing, and privacy check).
+  - `Neil Emmet.zip` -> `NE.zip`: Renamed tracked file to eliminate full name exposure.
+  - GitHub repo metadata: Updated description via GitHub API to remove "Neil Emmett" and use initial "NE".
+- **Verification:** `npm test` passing (6/6 tests ok). Worker syntax verified via `node --check`.
+- **Deploy/Next:** Atomic commit and git push.
