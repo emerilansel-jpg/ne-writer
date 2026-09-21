@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "NE Content Generator & Humanizer Studio powered by Pesat-Pro",
   "main": "worker.js",
+  "type": "module",
   "scripts": {
+    "test": "node test.js",
     "dev": "wrangler dev",
     "deploy": "wrangler deploy"
   },

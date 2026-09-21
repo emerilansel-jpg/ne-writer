@@ -259,6 +259,12 @@ function formatContentOutput(rawContent, expectedUrl, site, keyword) {
     disclaimer: "Outpatient psychiatric services. In emergency or crisis, call 988 or 911."
   };
 
+  // Strip wrapping markdown code fences if output by the model
+  res = res.replace(/^```(?:markdown)?\s*[\r\n]*/i, "").replace(/[\r\n]*```\s*$/i, "").trim();
+
+  // Enforce Humanizer Rule §8: Zero em dashes, en dashes, or double hyphens
+  res = res.replace(/[—–]/g, ", ").replace(/([^\s-])--([^\s-])/g, "$1, $2").replace(/\s+--\s+/g, " - ");
+
   // 1. Extract URL, Title, Meta Description if present
   const urlRegex = /(?:URL:\s*([^\n\r]+))/i;
   const titleRegex = /(?:Title(?:\s*Tag)?:\s*([^\n\r]+))/i;
@@ -288,15 +294,19 @@ function formatContentOutput(rawContent, expectedUrl, site, keyword) {
   res = header + res;
 
   // 2. Format the ending footer with separator (---), Brand Address Phone, and Italic Disclaimer
-  const splitIdx = res.search(/(\n|\r)\s*(?:---|___|\*\*\*|(?:\*+|_*)?Disclaimer:?|(?:\*+|\b)(?:Onward Psychiatry|Liberty TMS|Fayetteville TMS)\b.*Phone:)/i);
+  const cleanName = (siteData.name || site || "").replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const splitIdx = res.search(new RegExp(`(\\n|\\r)\\s*(?:---|___|\\*\\*\\*|(?:\\*+|_*)?Disclaimer:?|(?:\\*+|\\b)(?:Onward Psychiatry|Liberty TMS|Fayetteville TMS|${cleanName})\\b.*Phone:)`, 'i'));
   if (splitIdx !== -1) {
     res = res.substring(0, splitIdx).trim();
   }
 
-  const crisisIdx = res.search(/(\n|\r)\s*(?:[^\n\r]*)(?:provides outpatient psychiatric care|If you or a loved one is experiencing immediate distress)/i);
+  const crisisIdx = res.search(/(\n|\r)\s*(?:[^\n\r]*)(?:provides outpatient psychiatric care|If you or a loved one is experiencing immediate distress|individual treatment outcomes vary)/i);
   if (crisisIdx !== -1) {
     res = res.substring(0, crisisIdx).trim();
   }
+
+  // Strip trailing divider artifacts before appending canonical footer
+  res = res.replace(/[\r\n\s\-_]+$/, "");
 
   // Append canonical separator, address line, and italicized disclaimer
   res = res.trim() + buildCleanFooter(siteData, keyword);
@@ -326,7 +336,8 @@ async function callPesatRouter(env, systemPrompt, userPrompt, temperature = 0.25
       "Content-Type": "application/json",
       "Authorization": `Bearer ${apiKey}`
     },
-    body: JSON.stringify(payload)
+    body: JSON.stringify(payload),
+    signal: AbortSignal.timeout(90000)
   });
 
   if (!response.ok) {
@@ -346,6 +357,7 @@ const HTML_UI = `<!DOCTYPE html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NE Content Studio</title>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
@@ -936,7 +948,8 @@ const HTML_UI = `<!DOCTYPE html>
       document.getElementById('rawView').textContent = text;
       if (window.marked) {
         marked.use({ breaks: true, gfm: true });
-        document.getElementById('renderedView').innerHTML = marked.parse(text);
+        const parsed = marked.parse(text);
+        document.getElementById('renderedView').innerHTML = window.DOMPurify ? DOMPurify.sanitize(parsed) : parsed;
       } else {
         document.getElementById('renderedView').innerText = text;
       }
@@ -982,7 +995,14 @@ const HTML_UI = `<!DOCTYPE html>
       }, 700);
 
       try {
-        const endpoint = window.location.pathname.startsWith('/neil') ? '/api/neil/generate' : '/api/ne/generate';
+        let endpoint = '/api/ne/generate';
+        if (window.location.pathname.startsWith('/neil')) {
+          endpoint = '/api/neil/generate';
+        } else if (window.location.pathname.startsWith('/ne')) {
+          endpoint = '/api/ne/generate';
+        } else {
+          endpoint = '/api/generate';
+        }
         const res = await fetch(endpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -1049,7 +1069,7 @@ export default {
     }
 
     // Health check
-    if (path === "/ne/health" || path === "/api/ne/health" || path === "/neil/health" || path === "/api/neil/health") {
+    if (path === "/health" || path === "/api/health" || path === "/ne/health" || path === "/api/ne/health" || path === "/neil/health" || path === "/api/neil/health") {
       return new Response(JSON.stringify({
         status: "ok",
         service: "ne-writer",
@@ -1060,14 +1080,14 @@ export default {
     }
 
     // Guidelines Library API
-    if (path === "/ne/api/guidelines" || path === "/api/ne/guidelines" || path === "/neil/api/guidelines" || path === "/api/neil/guidelines") {
+    if (path === "/guidelines" || path === "/api/guidelines" || path === "/ne/api/guidelines" || path === "/api/ne/guidelines" || path === "/neil/api/guidelines" || path === "/api/neil/guidelines") {
       return new Response(JSON.stringify(KNOWLEDGE_BASE), {
         headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
       });
     }
 
     // POST Generate Endpoint (Unified 1-Step Execution, Guaranteed URL Slug & Humanized)
-    if ((path === "/ne/api/generate" || path === "/api/ne/generate" || path === "/neil/api/generate" || path === "/api/neil/generate") && request.method === "POST") {
+    if ((path === "/generate" || path === "/api/generate" || path === "/ne/api/generate" || path === "/api/ne/generate" || path === "/neil/api/generate" || path === "/api/neil/generate") && request.method === "POST") {
       try {
         const body = await request.json();
         const { site, keyword, contentType } = body;
@@ -1116,3 +1136,15 @@ export default {
     });
   }
 };
+
+export {
+  generateSlug,
+  getExpectedUrl,
+  getSiteDomain,
+  buildCleanFooter,
+  buildUnifiedPrompt,
+  formatContentOutput,
+  KNOWLEDGE_BASE,
+  DEFAULT_CONFIG
+};
+
